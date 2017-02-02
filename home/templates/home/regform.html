@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>ACM LAB,SUST</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'home/css/reg.css' %}" />
+</head>
+
+<body>
+  <!-- multistep form -->
+
+  <form id="msform" role="form" action="" method="post">
+  {% csrf_token %}
+  <!-- progressbar -->
+  <ul id="progressbar">
+    <li class="active">Account Setup</li>
+    <li>Student Profiles</li>
+    <li>Personal Details</li>
+  </ul>
+  <!-- fieldsets -->
+  <fieldset>
+    <h2 class="fs-title">Create your account</h2>
+    <h3 class="fs-subtitle">This is step 1</h3>
+    <input type="text" name="username" placeholder="username" />
+    <input type="email" name="email" placeholder="Email" />
+    <input type="password" name="password" placeholder="Password" />
+    <input type="button" name="next" class="next action-button" value="Next" />
+  </fieldset>
+  <fieldset>
+    <h2 class="fs-title">Student Profiles</h2>
+    <h3 class="fs-subtitle">Your student info</h3>
+    <input type="text" name="name" placeholder="name" />
+    <input type="text" name="reg" placeholder="reg_num" />
+    <input type="text" name="session" placeholder="session" />
+    <input type="button" name="previous" class="previous action-button" value="Previous" />
+    <input type="button" name="next" class="next action-button" value="Next" />
+  </fieldset>
+  <fieldset>
+    <h2 class="fs-title">Personal Details</h2>
+    <h3 class="fs-subtitle">Available to other member only</h3>
+    <input type="text" name="service" placeholder="service" />
+    <input type="text" name="phn" placeholder="Phone" />
+    <textarea name="add" placeholder="Address"></textarea>
+    <input type="button" name="previous" class="previous action-button" value="Previous" />
+    <input type="submit" name="submit" class="submit action-button" value="Submit" />
+  </fieldset>
+</form>
+  {% load staticfiles %}
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+  <script type="text/javascript" src="{% static 'home/js/reg.js' %}"></script>
+</body>
+</html>
+
+

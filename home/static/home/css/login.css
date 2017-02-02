@@ -1,0 +1,38 @@
+.login-style {
+    width: 250px;
+    background: rgba(0, 0, 0, 0.4);
+    color: gainsboro;
+}
+
+.btn-ov {
+    width: 16.5%;
+    height: auto;
+    margin-top: -10px;
+}
+
+.text-bottom p {
+    text-align: center;
+    color: gainsboro;
+}
+
+.text-bottom p:hover {
+    color: greenyellow;
+    text-decoration-line: none;
+}
+
+.form-group {
+    padding: 2px;
+    margin: 3px;
+}
+
+
+/* mobile fix */
+
+@media (max-width: 768px) {
+    .dropdown-lr h3 {
+        color: #eee;
+    }
+    .dropdown-lr label {
+        color: #eee;
+    }
+}

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACM Lab</title>
+    {% load staticfiles %}
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Federo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Italiana" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+    <!-- Load css styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/animate.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/lightbox.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/login.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/main.css' %}" />
+</head>
+
+<body>
+    <a href="#" class="back-to-top"> back-to-top </a>
+    <div class="navbar navbar-inverse" id="trans-nav">
+        <div class="row nav-size">
+            <div class="navbar-header">
+                <!-- responsive nav button -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- /responsive nav button -->
+
+                <!-- logo -->
+                <a href="#home" class="navbar-brand">
+                    <img src="{% static 'home/images/logo.png' %}" width="160" height="60" alt="Logo" />
+                </a>
+                <!-- /logo -->
+            </div>
+
+            <!-- main nav -->
+            <nav class="collapse navbar-collapse navbar-right nav-div" role="Navigation">
+                <ul id="nav" class="nav navbar-nav">
+                    <li class="current"><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#upcoming">Events</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#hall">hall of fame</a></li>
+                    <li><a href="#contact us">contact</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="/logout">{{user}}</a></li>
+                    {% else %}
+
+                    <!-- check-->
+                    <li class="dropdown">
+                        <a href="#login" class="dropdown-toggle" data-toggle="dropdown">Log In <span class="caret"></span></a>
+                        <ul class="dropdown-menu login-style wow fadeInDown" role="menu">
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <h4><b>Log In</b></h4></div>
+                                <form id="ajax-login-form" action="{% url 'login' %}" method="post" role="form" autocomplete="off">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="username">Username</label>
+                                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" autocomplete="off">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" autocomplete="off">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="container">
+                                            <button type="submit" class="btn btn-success btn-ov" value="Log In">Log In</button>
+                                        </div>
+                                    </div>
+                                    <a class="text-bottom" href="#">
+                                        <p>click to register</p>
+                                    </a>
+                                </form>
+                            </div>
+                        </ul>
+                    </li>
+                    <!--check end-->
+
+                    {% endif %}
+                </ul>
+            </nav>
+            <!-- /main nav -->
+        </div>
+    </div>
+    <!--home start-->
+    <div id="home">
+        <div class="home-section">
+            <div class="container">
+                <div class="home-title">
+                    <h2 class="title-1"><em><span>A</span>cm Lab</em></h2>
+                    <h3>Shahjalal University of Science and Technology</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- home end -->
+    <!--about section start-->
+    <section id="about">
+        <div class="about-section">
+            <div class="container">
+                <div class="row">
+                    <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
+                        <h2>About <span class="two-color">Us</span></h2>
+                        <div class="border"></div>
+                    </div>
+                    {% for about in all_about %}
+                    <div class="row">
+                        <div class="container ex-abt">
+                            <div class="col-md-6 about-media wow fadeInUp" data-wow-delay="300ms" data-wow-duration="500ms">
+                                <img src="{% static 'home/images/' %}{{about.image_url}}">
+                            </div>
+                            <div class="col-md-6 about-desc wow fadeInUp" data-wow-duration="300ms" data-wow-delay="300ms">
+                                <h3>Once upon a time</h3>
+                                <p>{{about.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--about section end-->
+
+    <!--upcoming section start -->
+    <section id="upcoming">
+        <div class="upcoming-section">
+            <div class="container">
+                <div class="row">
+                    <div class="title text-center wow fadeIn" data-wow-duration="500ms">
+                        <h2>Up<span class="two-color">coming</span></h2>
+                        <div class="border"></div>
+                    </div>
+                    {% for upc in all_upcoming %}
+                    <div class="news col-md-4 wow fadeInUp">
+                        <div class="single-news">
+                            <div class="news-photo">
+                                <img src="{% static 'home/images/' %}{{upc.image_url}}" alt="news photo">
+                            </div>
+                            <div class="news-title">
+                                <h4>{{upc.title}}</h4>
+                                <p><span>Place and time :</span>{{upc.date}}</p>
+                            </div>
+                            <div class="news-desc">
+                                <p>{{upc.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--upcoming section end -->
+    <!-- recent section startt-->
+    <section id="recent">
+        <div class="recent-section">
+            <div class="container">
+                <div class="row">
+                    <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
+                        <h2>Recent <span class="two-color">Event</span></h2>
+                        <div class="border"></div>
+                    </div>
+                    <div class="image-carousel">
+                        <div class="inner">
+                            {% for rec in all_recent %}
+                            <div class="recent wow fadeInUp">
+                                <div class="container">
+                                    <div class="col-md-5">
+                                        <div class="recent-media">
+                                            <img src="{% static 'home/images/' %}{{rec.image_url}}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="recent-desc">
+                                            <div class="recent-title">
+                                                <h3>{{rec.title}}</h3>
+                                            </div>
+                                            <div class="recent-info">
+                                                <div><span>Date</span>{{rec.date}}</div>
+                                                <div><span>Place</span>IICT,SUST</div>
+                                            </div>
+                                            <p>{{rec.description}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="prev"></div>
+                        <div class="next"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- recent section end-->
+    <section class="divider parallax-section">
+        <div class="container">
+            <div class="row">
+                <div class="motiv-text text-center wow fadeInDown" data-wow-duration="500ms">
+                    <h3>Perfection is Achieved Not When There Is Nothing More to Add, But When There Is Nothing Left to Take Away</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--gallery section start-->
+    <section id="gallery">
+        <div class="gallery-section">
+            <div class="container">
+                <div class="row">
+                    <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
+                        <h2>Photo <span class="two-color">Gallery</span></h2>
+                        <div class="border"></div>
+                    </div>
+                    <div class="container">
+                        <div class="gallery-tab">
+                            <div class="photo-window group">
+                                {% for gal in all_gallery %}
+                                <a href="{% static 'home/images/' %}{{gal.image_url}}" data-lightbox="gallery" data-title="{{gal.title}}"><img src="{% static 'home/images/' %}{{gal.image_url}}" alt="image-1"></a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--gallery section end-->
+    <section class="divider parallax-section">
+        <div class="container">
+            <div class="row">
+                <div class="quote-section">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="quote text-center  wow fadeInLeft" data-wow-duration="500ms">
+                                <p>“Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live”</p>
+                                <p>― John Woods</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="quote text-center wow fadeInUp" data-wow-delay="500ms" data-wow-duration="500ms">
+                                <p>“Talk is cheap. Show me the code.”</p>
+                                <p>― Linus Torvalds</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="quote text-center wow fadeInRight" data-wow-delay="300ms" data-wow-duration="500ms">
+                                <p>“The most disastrous thing that you can ever learn is your first programming language.”</p>
+                                <p>― Alan Kay</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- contact section-->
+    <section id="contact-us" class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="title text-center wow fadeIn" data-wow-duration="500ms">
+                    <h2>Get In <span class="two-color">Touch</span></h2>
+                    <div class="border"></div>
+                </div>
+                <div class="contact-info col-md-6 wow fadeInUp" data-wow-duration="500ms">
+                    <h3>Contact Details</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, vero, provident, eum eligendi blanditiis ex explicabo vitae nostrum facilis asperiores dolorem illo officiis ratione vel fugiat dicta laboriosam labore adipisci.</p>
+                    <div class="contact-details">
+                        <div class="con-info clearfix">
+                            <i class="fa fa-home fa-lg"></i>
+                            <span>SUST, Sylhet, Bangladesh</span>
+                        </div>
+
+                        <div class="con-info clearfix">
+                            <i class="fa fa-phone fa-lg"></i>
+                            <span>Phone: +880-31-000-000</span>
+                        </div>
+
+                        <div class="con-info clearfix">
+                            <i class="fa fa-fax fa-lg"></i>
+                            <span>Fax: +880-31-000-000</span>
+                        </div>
+
+                        <div class="con-info clearfix">
+                            <i class="fa fa-envelope fa-lg"></i>
+                            <span>Email: acmlab@sust.edu.com</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form col-md-6 wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
+                    <form id="contact-form" method="post" action="sendmail.php" role="form">
+
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" class="form-control" name="name" id="name">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" class="form-control" name="email" id="email">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" placeholder="Subject" class="form-control" name="subject" id="subject">
+                        </div>
+
+                        <div class="form-group">
+                            <textarea rows="6" placeholder="Message" class="form-control" name="message" id="message"></textarea>
+                        </div>
+
+                        <div id="mail-success" class="success">
+                            Thank you. The Mailman is on His Way :)
+                        </div>
+
+                        <div id="mail-fail" class="error">
+                            Sorry, don't know what happened. Try later :(
+                        </div>
+
+                        <div id="cf-submit">
+                            <input type="submit" id="contact-submit" class="btn btn-transparent" value="Submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--contact end-->
+    <!--footer and other-->
+    <div class="footer">
+        <p>&copy; Mursalin</p>
+    </div>
+    <!--script-->
+    {% load staticfiles %}
+
+    <script src="https://use.fontawesome.com/618e19295e.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static 'home/js/jquery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/jquery.singlePageNav.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/lightbox.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/recent.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/transnav.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/wow.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/scrollEffect.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/backtotop.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/custom.js' %}"></script>
+</body>
+
+</html>
