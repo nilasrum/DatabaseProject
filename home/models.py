@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 
 
 class UserInfo(models.Model):
@@ -12,34 +13,35 @@ class UserInfo(models.Model):
     add = models.CharField(max_length=500)
     phn = models.CharField(max_length=100)
 
-class About(models.Model):
-    image_url = models.CharField(max_length=1000)
-    description = models.CharField(max_length=5000)
 
-    def __str__(self):
-        return self.image_url
+class About(models.Model):
+    image_url = models.FileField()
+    description = models.TextField(max_length=2000)
 
 
 class Recent(models.Model):
     title = models.CharField(max_length=500)
     date = models.CharField(max_length=30)
-    description = models.CharField(max_length=5000)
-    image_url = models.CharField(max_length=1000)
+    description = models.TextField(max_length=2000)
+    image_url = models.FileField()
 
 
 class Upcoming(models.Model):
     title = models.CharField(max_length=500)
     date = models.CharField(max_length=30)
-    description = models.CharField(max_length=5000)
-    image_url = models.CharField(max_length=1000)
+    description = models.TextField(max_length=2000)
+    image_url = models.FileField()
+
+    def get_absolute_url(self):
+        return reverse('home:index')
 
 
 class Gallery(models.Model):
     title = models.CharField(max_length=500)
-    image_url = models.CharField(max_length=1000)
+    image_url = models.FileField()
 
     def __str__(self):
-        return self.title+"-"+self.image_url
+        return self.title
 
 
 class Hall_of_fame(models.Model):
@@ -47,4 +49,5 @@ class Hall_of_fame(models.Model):
     member1 = models.CharField(max_length=100)
     member2 = models.CharField(max_length=100)
     member3 = models.CharField(max_length=100)
-    description = models.CharField(max_length=5000)
+    description = models.TextField(max_length=2000)
+    image_url = models.FileField()

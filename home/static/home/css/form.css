@@ -1,0 +1,23 @@
+.about-form {
+    background: #2B2C30;
+    color: gainsboro;
+    align-content: center;
+}
+
+.pad {
+    margin-bottom: 10px;
+}
+
+.pad-dec {
+    margin-top: -50px;
+}
+
+.vertical-sett {
+    text-align: right;
+}
+
+.form-group textarea {
+    background: transparent;
+    padding: 7px;
+    width: 600px;
+}

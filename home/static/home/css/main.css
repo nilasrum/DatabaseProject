@@ -22,9 +22,16 @@
 }
 
 .navbar-brand {
-    height: 60px;
+    height: 50px;
     width: 160px;
-    margin-top: -20px;
+    line-height: 20px;
+}
+
+.navbar-brand img {
+    height: 50px;
+    width: 160px;
+    margin-top: -15px;
+    padding: 2px;
 }
 
 .navbar-brand h1 {
@@ -144,6 +151,7 @@
 }
 
 .about-desc {
+    margin-top: -5px;
     margin-left: -25px;
 }
 
@@ -177,7 +185,21 @@
     padding-bottom: 60px;
 }
 
-.news {}
+.news {
+    margin-bottom: 30px;
+}
+
+.edit-ico i {
+    text-decoration: none;
+    font-size: 14px;
+    color: white;
+    opacity: .7;
+}
+
+.edit-ico i:hover {
+    color: white;
+    opacity: 1;
+}
 
 .single-news {
     background-color: #303136;
@@ -192,6 +214,7 @@
 .news-photo img {
     padding: 6px;
     max-height: 230px;
+    min-height: 230px;
 }
 
 .news-title {
@@ -219,6 +242,24 @@
     height: 100px;
     content: justify;
     color: white;
+}
+
+.mybtn {
+    background-color: rgba(0, 0, 0, .5);
+    color: gainsboro;
+    border-radius: 0;
+    padding-left: 9px;
+    padding-right: 9px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: -5px;
+    -webkit-transition: all .5s ease-in 0s;
+    -moz-transition: all .5s ease-in 0s;
+    -o-transition: all .5s ease-in 0s;
+    transition: all .5s ease-in 0s;
+    line-height: 1.5;
+    border: 1px solid transparent;
+    opacity: .9;
 }
 
 
@@ -582,6 +623,34 @@ a.back-to-top:hover {
 
 
 /*mix*/
+
+.float-menu {
+    width: auto;
+    position: absolute;
+    font-size: 18px;
+    margin: 11px 7px;
+}
+
+.float-btn {
+    color: gainsboro;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0.5;
+}
+
+.float-btn:hover {
+    opacity: 1;
+    color: white;
+}
+
+.fun {
+    color: #222;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 
 img {
     max-width: 100%;

@@ -4,20 +4,51 @@
     color: gainsboro;
 }
 
+.logout-style {
+    width: 200px;
+    background: rgba(0, 0, 0, 0.4);
+    color: gainsboro;
+}
+
+.logout-menu {
+    padding: 10px;
+    border-bottom: 1px solid gainsboro;
+    width: 90%;
+    margin-left: 10px;
+}
+
+.logout-menu a {
+    font-family: 'Federo', sans-serif;
+    color: gainsboro;
+    text-decoration: none;
+    padding-bottom: 10px;
+    opacity: .5;
+}
+
+.logout-menu a:hover {
+    color: white;
+    text-decoration: none;
+    opacity: 1;
+}
+
 .btn-ov {
-    width: 16.5%;
+    width: 100%;
     height: auto;
     margin-top: -10px;
+    margin-right: 4px;
 }
 
 .text-bottom p {
     text-align: center;
     color: gainsboro;
+    opacity: .5;
 }
 
 .text-bottom p:hover {
-    color: greenyellow;
+    color: white;
+    text-decoration: none;
     text-decoration-line: none;
+    opacity: 1;
 }
 
 .form-group {

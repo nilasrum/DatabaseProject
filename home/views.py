@@ -1,12 +1,48 @@
+from django.http import Http404
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
 from django.views import generic
 from django.views.generic import View
-from .forms import UserForm,LoginForm
+from django.views.generic.edit import CreateView,UpdateView,DeleteView
+from .forms import UserForm,LoginForm,AboutForm
 from .models import Gallery,About,Recent,Upcoming,UserInfo
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
+
+# self_defined useful functions
+# --------------------------------------------
+
+def admin_error(request):
+    raise Http404("may be u shouldn't be here")
+
+
+def cbv_decorator(decorator):
+    """
+    Turns a normal view decorator into a class-based-view decorator.
+
+    Usage:
+
+    @cbv_decorator(login_required)
+    class MyClassBasedView(View):
+        pass
+    """
+
+    def _decorator(cls):
+        cls.dispatch = method_decorator(decorator)(cls.dispatch)
+        return cls
+
+    return _decorator
+
+
+# home page
+# ----------------------------------------------
 
 def index(request):
     all_recent = Recent.objects.all()
@@ -22,13 +58,17 @@ def index(request):
     return render(request,'home/index.html',context)
 
 
-def LogOutReq(request):
+# login/logout
+# ------------------------------------------
+
+def logout_req(request):
     if request.user.is_authenticated():
         logout(request)
-        return redirect('http://127.0.0.1:8000/home/')
+        return redirect('home:index')
     return False
 
-def LoginFormView(request):
+
+def login_form_view(request):
     form = LoginForm(request.POST or None)
 
     if form.is_valid():
@@ -38,10 +78,9 @@ def LoginFormView(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return redirect('http://127.0.0.1:8000/home/')
+                return redirect('home:index')
 
     return render(request, 'home/loginform.html', {'form': form})
-
 
 
 class UserFormView(View):
@@ -79,6 +118,54 @@ class UserFormView(View):
             if user is not None:
                 if user.is_active:
                     login(request,user)
-                    return redirect('http://127.0.0.1:8000/home/')
+                    return redirect('home:index')
 
         return render(request, self.template_name, {'form': form})
+
+
+# about-section
+# -------------------------------
+
+@user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err'))
+def update_about(request):
+    instance = get_object_or_404(About, id=1)
+    form = AboutForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        return redirect('home:index')
+
+    context = {
+        'instance': instance,
+        'form': form,
+    }
+
+    return render(request, 'home/about_form.html', context)
+
+
+# upcoming-section
+# ---------------------------------------
+
+def upcoming_detail(requst,id):
+    instance = get_object_or_404(Upcoming,id=id)
+    return HttpResponse('<h2>hi there '+instance.title+' </h2>')
+
+
+@cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
+class CreateUpcoming(CreateView):
+    model = Upcoming
+    fields = ['title','date','description','image_url']
+
+
+@cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
+class UpdateUpcoming(UpdateView):
+    model = Upcoming
+    fields = ['title','date','description','image_url']
+
+
+@cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
+class DeleteUpcoming(DeleteView):
+    model = Upcoming
+    success_url = reverse_lazy('home:index')
+
+

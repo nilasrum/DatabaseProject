@@ -1,6 +1,5 @@
-from django.contrib.auth.models import User
 from django import forms
-from .models import UserInfo
+from .models import UserInfo,About
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -13,3 +12,10 @@ class UserForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class AboutForm(forms.ModelForm):
+
+    class Meta:
+        model = About
+        fields = ['image_url','description']
