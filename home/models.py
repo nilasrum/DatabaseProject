@@ -18,6 +18,9 @@ class About(models.Model):
     image_url = models.FileField()
     description = models.TextField(max_length=2000)
 
+    def get_absolute_url(self):
+        return reverse('home:index')
+
 
 class Recent(models.Model):
     title = models.CharField(max_length=500)

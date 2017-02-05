@@ -1,6 +1,7 @@
 from django import forms
 from .models import UserInfo,About
 
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
 
@@ -14,8 +15,4 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-class AboutForm(forms.ModelForm):
 
-    class Meta:
-        model = About
-        fields = ['image_url','description']

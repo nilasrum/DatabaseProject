@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.views import generic
 from django.views.generic import View
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
-from .forms import UserForm,LoginForm,AboutForm
+from .forms import UserForm,LoginForm
 from .models import Gallery,About,Recent,Upcoming,UserInfo
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
@@ -126,21 +126,10 @@ class UserFormView(View):
 # about-section
 # -------------------------------
 
-@user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err'))
-def update_about(request):
-    instance = get_object_or_404(About, id=1)
-    form = AboutForm(request.POST or None, instance=instance)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.save()
-        return redirect('home:index')
-
-    context = {
-        'instance': instance,
-        'form': form,
-    }
-
-    return render(request, 'home/about_form.html', context)
+@cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
+class UpdateAbout(UpdateView):
+    model = About
+    fields = ['image_url','description']
 
 
 # upcoming-section

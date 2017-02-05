@@ -28,7 +28,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{% url 'home:index' %}">
                 <img src="{% static 'home/images/logo.png' %}" alt="Acm Lab" />
             </a>
         </div>
@@ -46,7 +46,7 @@
                     <a href="#logout" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" style="margin-right:8px;"></i>{{user}}</a>
                     <ul class="dropdown-menu logout-style wow fadeInDown">
                         <div class="logout-menu"><i class="fa fa-smile-o fa-lg" style="padding-right:10px;"></i><a href="#">Profile</a></div>
-                        <div class="logout-menu"><i class="fa fa-power-off fa-lg" style="padding-right:10px;"></i><a href="/logout">Logout</a></div>
+                        <div class="logout-menu"><i class="fa fa-power-off fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:logout' %}">Logout</a></div>
                     </ul>
                 </li>
                 {% else %}
@@ -70,11 +70,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="container">
+                                    <div class="fluid-container">
                                         <button type="submit" class="btn btn-success btn-ov" value="Log In">Log In</button>
                                     </div>
                                 </div>
-                                <a class="text-bottom" href="register">
+                                <a class="text-bottom" href="{% url 'home:register' %}">
                                     <p>click to register</p>
                                 </a>
                             </form>
@@ -112,7 +112,7 @@
                     <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
                         <h2>About <span class="two-color">Us</span>
                             {% if user.is_superuser %}
-                            <a href="{% url 'home:edit-about' %}" class="edit-ico"><i class="fa fa-edit">edit</i></a>
+                            <a href="{% url 'home:edit-about' 1 %}" class="edit-ico"><i class="fa fa-edit">edit</i></a>
                             {% endif %}
                         </h2>
                         <div class="border"></div>
@@ -169,7 +169,7 @@
                                 <img src="{{upc.image_url.url}}" alt="news photo">
                             </div>
                             <div class="news-title">
-                                <h4>{{upc.title}} : {{upc.id}}</h4>
+                                <h4>{{upc.title}}</h4>
                                 <p><span>Place and time :</span>{{upc.date}}</p>
                             </div>
                             <div class="news-desc">
@@ -411,13 +411,13 @@
                 changeHash: false,
                 scrollSpeed: 1000
             });
-        })
+        });
     </script>
     <script>
         $(document).ready(function () {
             'use strict';
             $("#h").click();
-        })
+        });
     </script>
 </body>
 
