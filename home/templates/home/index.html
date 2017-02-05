@@ -20,69 +20,73 @@
 
 <body>
     <a href="#" class="back-to-top"> back-to-top </a>
-    <div class="navbar navbar-inverse">
-        <div class="row nav-size">
-            <!-- logo -->
-            <a href="#home" class="navbar-brand">
-                <img src="{% static 'home/images/logo.png' %}" alt="Logo" />
+    <header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'home/images/logo.png' %}" alt="Acm Lab" />
             </a>
-            <!-- /logo -->
-            <!-- main nav -->
-            <nav class="collapse navbar-collapse navbar-right nav-div" role="Navigation">
-                <ul id="nav" class="nav navbar-nav">
-                    <li class="current"><a href="#home">Home</a></li>
-                    <li><a href="#about">About Us</a></li>
-                    <li><a href="#upcoming">Events</a></li>
-                    <li><a href="#gallery">Gallery</a></li>
-                    <li><a href="#hall">hall of fame</a></li>
-                    <li><a href="#contact us">contact</a></li>
-                    {% if user.is_authenticated %}
-                    <li class="dropdown">
-                        <a href="#logout" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" style="margin-right:8px;"></i>{{user}}</a>
-                        <ul class="dropdown-menu logout-style wow fadeInDown">
-                            <div class="logout-menu"><i class="fa fa-smile-o fa-lg" style="padding-right:10px;"></i><a href="#">Profile</a></div>
-                            <div class="logout-menu"><i class="fa fa-power-off fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:logout' %}">Logout</a></div>
-                        </ul>
-                    </li>
-                    {% else %}
-                    <!-- check-->
-                    <li class="dropdown">
-                        <a href="#login" class="dropdown-toggle" data-toggle="dropdown">Log In <span class="caret"></span></a>
-                        <ul class="dropdown-menu login-style wow fadeInDown" role="menu">
-                            <div class="col-lg-12">
-                                <div class="text-center">
-                                    <h4><b>Log In</b></h4></div>
-                                <form id="ajax-login-form" action="{% url 'home:login' %}" method="post" role="form" autocomplete="off">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label for="username">Username</label>
-                                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" autocomplete="off">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" autocomplete="off">
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="fluid-container">
-                                            <button type="submit" class="btn btn-transparent btn-ov" value="Log In">Log In</button>
-                                        </div>
-                                    </div>
-                                    <a class="text-bottom" href="register">
-                                        <p>click to register</p>
-                                    </a>
-                                </form>
-                            </div>
-                        </ul>
-                    </li>
-                    <!--check end-->
-                    {% endif %}
-                </ul>
-            </nav>
-            <!-- /main nav -->
         </div>
-    </div>
+
+        <nav class="collapse navbar-collapse navbar-right">
+            <ul id="nav" class="nav navbar-nav">
+                <li><a href="#home" id="h">Home</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#upcoming">Events</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#hall">hall of fame</a></li>
+                <li><a href="#contact-us">contact</a></li>
+                {% if user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#logout" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" style="margin-right:8px;"></i>{{user}}</a>
+                    <ul class="dropdown-menu logout-style wow fadeInDown">
+                        <div class="logout-menu"><i class="fa fa-smile-o fa-lg" style="padding-right:10px;"></i><a href="#">Profile</a></div>
+                        <div class="logout-menu"><i class="fa fa-power-off fa-lg" style="padding-right:10px;"></i><a href="/logout">Logout</a></div>
+                    </ul>
+                </li>
+                {% else %}
+                <!-- check-->
+                <li class="dropdown">
+                    <a href="#login" class="dropdown-toggle" data-toggle="dropdown">Log In <span class="caret"></span></a>
+                    <ul class="dropdown-menu login-style wow fadeInDown" role="menu">
+                        <div class="col-lg-12">
+                            <div class="text-center">
+                                <h4><b>Log In</b></h4></div>
+                            <form id="ajax-login-form" action="{% url 'home:login' %}" method="post" role="form" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" autocomplete="off">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" autocomplete="off">
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="container">
+                                        <button type="submit" class="btn btn-success btn-ov" value="Log In">Log In</button>
+                                    </div>
+                                </div>
+                                <a class="text-bottom" href="register">
+                                    <p>click to register</p>
+                                </a>
+                            </form>
+                        </div>
+                    </ul>
+                </li>
+                <!--check end-->
+                {% endif %}
+            </ul>
+        </nav>
+        <!-- /.navbar-collapse -->
+    </header>
     <!--home start-->
     <div id="home">
         <div class="home-section">
@@ -290,6 +294,27 @@
             </div>
         </div>
     </section>
+    <!--halloffame section start-->
+    <section id="hall">
+        <div class="hall-section">
+            <div class="container">
+                <div class="row">
+                    <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
+                        <h2>Hall of<span class="two-color"> fame</span>
+                            {% if user.is_superuser %}
+                            <a href="" class="edit-ico"><i class="fa fa-edit">edit</i></a>
+                            {% endif %}
+                        </h2>
+                        <div class="border"></div>
+                    </div>
+                    <div class="container text-center">
+                        <h1>A joss hall of fame</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--halloffame section end-->
     <!-- contact section-->
     <section id="contact-us" class="contact-section">
         <div class="container">
@@ -381,8 +406,17 @@
     <script>
         $(document).ready(function () {
             'use strict';
-
-            $('#nav').onePageNav();
+            $('#nav').onePageNav({
+                currentClass: 'current',
+                changeHash: false,
+                scrollSpeed: 1000
+            });
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            'use strict';
+            $("#h").click();
         })
     </script>
 </body>

@@ -6,7 +6,6 @@
 }
 
 .navbar-inverse {
-    position: fixed;
     z-index: 990;
     color: #2B2C30;
     background-color: #2B2C30;
@@ -30,7 +29,7 @@
 .navbar-brand img {
     height: 50px;
     width: 160px;
-    margin-top: -15px;
+    margin-top: -17px;
     padding: 2px;
 }
 
@@ -70,6 +69,11 @@
 .navbar-inverse .navbar-nav > li > a:hover {
     color: #FFFFFF;
     border: 1px solid #FFFFFF;
+}
+
+.navbar-inverse .navbar-nav > li > a:focus {
+    color: #FFF;
+    outline: none;
 }
 
 
@@ -438,6 +442,24 @@
 
 
 /*gallery end*/
+
+
+/*hall-of-fame*/
+
+.hall-section {
+    padding-top: 30px;
+    padding-bottom: 60px;
+    background-color: #333439;
+}
+
+.hall-section h1 {
+    color: white;
+    font-family: "Federo";
+    /*Italiana",Poiret+One","Federo"*/
+}
+
+
+/*hall-of-fame-end*/
 
 
 /*contact section start */
