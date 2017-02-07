@@ -54,3 +54,6 @@ class Hall_of_fame(models.Model):
     member3 = models.CharField(max_length=100)
     description = models.TextField(max_length=2000)
     image_url = models.FileField()
+
+    def get_absolute_url(self):
+        return reverse('home:index')

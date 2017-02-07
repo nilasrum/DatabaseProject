@@ -6,7 +6,7 @@ from django.views import generic
 from django.views.generic import View
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from .forms import UserForm,LoginForm
-from .models import Gallery,About,Recent,Upcoming,UserInfo
+from .models import Gallery,About,Recent,Upcoming,UserInfo,Hall_of_fame
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
@@ -49,11 +49,13 @@ def index(request):
     all_upcoming = Upcoming.objects.all()
     all_about = About.objects.all()
     all_gallery = Gallery.objects.all()
+    all_hall = Hall_of_fame.objects.all()
     context = {
         'all_about':all_about,
         'all_recent':all_recent,
         'all_upcoming':all_upcoming,
-        'all_gallery':all_gallery
+        'all_gallery':all_gallery,
+        'all_hall':all_hall
     }
     return render(request,'home/index.html',context)
 
@@ -151,6 +153,18 @@ class UpdateUpcoming(UpdateView):
     model = Upcoming
     fields = ['title','date','description','image_url']
 
+
+# hall of fame
+# -----------------------
+
+
+@cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
+class CreateHalloffame(CreateView):
+    model = Hall_of_fame
+    fields = ['teamname','member1','member2','member3','description','image_url']
+
+
+# extra
 
 @cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
 class DeleteUpcoming(DeleteView):

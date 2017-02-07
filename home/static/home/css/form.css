@@ -47,6 +47,10 @@ input[type=text]:hover {
 
 /*button*/
 
+.b-btn{
+    width:200px;
+}
+
 #id_image_url {
     display: none;
 }

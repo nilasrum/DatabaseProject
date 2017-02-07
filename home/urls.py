@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^upcoming/(?P<pk>[0-9]+)/edit/$', views.UpdateUpcoming.as_view(),name='edit-upcoming'),
     url(r'^upcoming/(?P<pk>[0-9]+)/delete/$', views.DeleteUpcoming.as_view(),name='delete-upcoming'),
 
+    url(r'^add/halloffame/$', views.CreateHalloffame.as_view(),name='add-halloffame'),
+
     url(r'^about/(?P<pk>[0-9]+)/edit/$', views.UpdateAbout.as_view(),name='edit-about'),
     url(r'^adminerr/$', views.admin_error,name='admin-err'),
 ]
