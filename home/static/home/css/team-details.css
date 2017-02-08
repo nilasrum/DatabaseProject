@@ -1,0 +1,211 @@
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
+    color: #383838;
+    line-height: 30px;
+    background: #383838;
+    line-height: 1.5;
+}
+
+.topbottom {
+    margin: 6% auto;
+    /*glass*/
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 5px 5px 5px 5px;
+    -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), inset 0 1px rgba(255, 255, 255, 0.3), inset 0 10px rgba(255, 255, 255, 0.2), inset 0 10px 20px rgba(255, 255, 255, 0.25), inset 0 -15px 30px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), inset 0 1px rgba(255, 255, 255, 0.3), inset 0 10px rgba(255, 255, 255, 0.2), inset 0 10px 20px rgba(255, 255, 255, 0.25), inset 0 -15px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5), inset 0 1px rgba(255, 255, 255, 0.3), inset 0 10px rgba(255, 255, 255, 0.2), inset 0 10px 20px rgba(255, 255, 255, 0.25), inset 0 -15px 30px rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+a,
+a:hover {
+    text-decoration: none;
+}
+
+.avatar {
+    width: 100%;
+    height: auto;
+    max-height: 280px;
+    margin-top: 10px;
+    border-radius: 3px 3px 3px 3px;
+}
+
+.navigation {
+    background: #232323;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 20px;
+    margin-top: 10px;
+    border: 1px solid #1e1e1e;
+    border-radius: 3px 3px 3px 3px;
+    font-family: 'Poiret One';
+}
+
+.navigation ul {
+    margin: 0 !important;
+}
+
+.navigation li {
+    list-style-type: none !important;
+    border-bottom: 1px solid #2e2e2e;
+}
+
+.navigation img {
+    margin-left: -20px;
+    padding-right: 20px;
+}
+
+.navigation li:hover {
+    background: #161616;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    transition: 0.3s linear;
+}
+
+.navigation a,
+.navigation a:hover {
+    color: #fff !important;
+    line-height: 40px;
+    padding-left: 10px;
+    display: inline-block;
+}
+
+.homeabout {
+    margin-top: 50px;
+    padding: 20px 30px;
+    min-height: 439px!important;
+}
+
+.person {
+    font-size: 30px;
+    border-bottom: 1px solid #e1e1e1;
+    padding-bottom: 20px;
+    line-height: normal;
+    margin: 0;
+}
+
+.person a,
+.person a:hover {
+    color: #21ba82 !important;
+}
+
+.name {
+    font-family: "Federo";
+    font-weight: 600;
+    color: #fff;
+}
+
+.desciption {
+    font-family: 'Poiret One';
+    font-weight: bold;
+    align-self: center;
+    color: gainsboro;
+}
+
+.desciption.home {
+    margin-top: -20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 12px;
+    margin-bottom: 13px;
+}
+
+.desciption p {
+    margin: 10px 0 !important;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.row {
+    margin-left: 0px !important;
+    margin-bottom: 24px;
+    margin-top: 10px;
+}
+
+.margin-center {
+    text-align: center;
+}
+
+.margin-right {
+    text-align: right;
+}
+
+.desciption img {
+    padding: 10px;
+    background: #232323;
+}
+
+.img {
+    float: left;
+}
+
+.bars {
+    margin-top: 10px;
+    display: inline-block;
+    color: gainsboro;
+}
+
+.bar-percent {
+    color: red;
+}
+
+.bar-label {
+    margin-right: 15px;
+}
+
+.bar-desc {
+    font-family: 'Poiret One';
+    font-weight: bold;
+    margin-top: 35px;
+    border: 1px solid gainsboro;
+}
+
+#bars-content .content {
+    font-size: 15px;
+    background: transparent;
+    padding: 18px;
+    color: gainsboro;
+    overflow: auto;
+}
+
+.jqbar.active {}
+
+.jqbar.active .bar-level,
+.jqbar.hover .bar-level {
+    background-color: #829515!important;
+}
+
+button[type='submit'] {
+    color: gainsboro;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    right: 0;
+    position: absolute;
+    margin-right: 110px;
+    margin-top: 6px;
+    z-index: 999;
+    opacity: .5;
+}
+
+button[type='submit']:hover {
+    color: red;
+    opacity: 1;
+}
+
+.e-btn {
+    color: gainsboro;
+    margin-right: 75px;
+    margin-top: 12px;
+    position: absolute;
+    right: 0;
+    z-index: 999;
+    opacity: .5;
+}
+
+.e-btn:hover {
+    opacity: 1;
+    color: white;
+}

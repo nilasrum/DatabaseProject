@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Details</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/jqbar.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/team-details.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Federo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="container topbottom">
+        {% if user.is_superuser %}
+        <div class="edit-menu">
+            <form action="{% url 'home:delete-halloffame' team.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="hall_of_fame_id" value="{{ team.id }}" />
+                <button type="submit"><i class="fa fa-trash-o fa-lg"></i></button>
+            </form>
+
+            <a href="{% url 'home:edit-halloffame' team.id %}"><i class="fa fa-edit fa-lg e-btn"></i></a>
+        </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-6">
+                <div><img src="{{ team.image_url.url }}" alt="Profile Avatar" class="avatar"></div>
+                <div class="navigation">
+
+                    <ul>
+                        <li>
+                            <img src="{% static 'home/images/about-icon.png' %}">
+                            <a href="index.html">{{ team.member1 }}</a>
+                        </li>
+                        <li>
+                            <img src="{% static 'home/images/about-icon.png' %}">
+                            <a href="portfolio.html">{{ team.member2 }}</a>
+                        </li>
+                        <li>
+                            <img src="{% static 'home/images/about-icon.png' %}">
+                            <a href="follow.html">{{team.member3}}</a>
+                        </li>
+                        <li>
+                            <img src="{% static 'home/images/coach.png' %}">
+                            <a href="contact.html">Saiful saif</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="homeabout">
+                    <div class="person">
+                        <span class="name">{{team.teamname}}</span>
+                    </div>
+                    <div class="bars">
+                        <div id="bar-1"></div>
+                        <br/>
+                        <div id="bar-2"></div>
+                        <br/>
+                        <div id="bar-3"></div>
+                        <br/>
+                        <div id="bar-4"></div>
+                        <br/>
+
+                    </div>
+                    <div class="bar-desc">
+                        <div id="bars-content">
+                            <div class="content" id="content-1">HTML5 is a markup language used for structuring and presenting content for the World Wide Web and a core technology of the Int5 is a markup language used for structuring and presenting content for the World Wide Web and a core technoagnet.</div>
+                            <div class="content" id="content-2">CSS is a style sheet language used for describing the presentation semantics of a document written in a markup language.</div>
+                            <div class="content" id="content-3">As part of web browsers, implementations allow client-side scripts to interact with the user and control the browser.</div>
+                            <div class="content" id="content-4">WordPress is an open source blogging tool and a CMS based on PHP and MySQL, which runs on a web hosting service.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="desciption home">
+                <p>{{team.description}}</p>
+            </div>
+        </div>
+    </div>
+
+    {% load staticfiles %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static 'home/js/jqbar.js' %}"></script>
+    <script src="https://use.fontawesome.com/618e19295e.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#bar-1').jqbar({
+                label: 'Participated',
+                value: 5,
+                barColor: '#bad61f'
+            });
+
+            $('#bar-2').jqbar({
+                label: 'Top 10',
+                value: 20,
+                barColor: '#bad61f'
+            });
+
+            $('#bar-3').jqbar({
+                label: 'Top 5',
+                value: 10,
+                barColor: '#bad61f'
+            });
+
+            $('#bar-4').jqbar({
+                label: 'Champion',
+                value: 22,
+                barColor: '#bad61f'
+            });
+
+
+
+            $('#bars-content .content').css({
+                'opacity': '0',
+                display: 'none'
+            });
+            $('#bars-content .content:eq(0)').css('display', 'block').animate({
+                opacity: 1
+            }, 1000);
+            $('.jqbar:first').addClass('active');
+            $('.jqbar').hover(function () {
+                $(this).addClass('hover');
+            }, function () {
+                $(this).removeClass('hover');
+            });
+            $('.jqbar').click(function () {
+                $('.jqbar').removeClass('active');
+                var id = $(this).addClass('active').attr('id').replace('bar', 'content');
+                $('#bars-content .content').css({
+                    'opacity': '0',
+                    display: 'none'
+                });
+                $('#' + id).css('display', 'block').animate({
+                    opacity: 1
+                }, 1000);
+
+            });
+
+        });
+    </script>
+
+</body>
+
+
+</html>

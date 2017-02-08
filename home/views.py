@@ -154,6 +154,12 @@ class UpdateUpcoming(UpdateView):
     fields = ['title','date','description','image_url']
 
 
+@cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
+class DeleteUpcoming(DeleteView):
+    model = Upcoming
+    success_url = reverse_lazy('home:index')
+
+
 # hall of fame
 # -----------------------
 
@@ -164,11 +170,20 @@ class CreateHalloffame(CreateView):
     fields = ['teamname','member1','member2','member3','description','image_url']
 
 
-# extra
+def halloffame_detail(request,id):
+    team = get_object_or_404(Hall_of_fame,id=id)
+    return render(request,'home/team_detail.html',{'team':team})
+
 
 @cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
-class DeleteUpcoming(DeleteView):
-    model = Upcoming
+class UpdateHalloffame(UpdateView):
+    model = Hall_of_fame
+    fields = ['teamname','member1','member2','member3','description','image_url']
+
+
+@cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
+class DeleteHalloffame(DeleteView):
+    model = Hall_of_fame
     success_url = reverse_lazy('home:index')
 
 

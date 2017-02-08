@@ -317,7 +317,7 @@
                             {% for hall in all_hall %}
                             <div>
                                 <!-- SLIDE ITEM -->
-                                <a href="{{hall.image_url.url}}" class="image-border"><img src="{{hall.image_url.url}}" /></a>
+                                <a href="{% url 'home:detail-halloffame' hall.id %}" class="image-border"><img src="{{hall.image_url.url}}" /></a>
                                 <!--description(main)/slide(jquery.carousel)/-->
                                 <div class="description">
                                     <div class="team-tag">
@@ -415,17 +415,16 @@
     </div>
     <!--script-->
     {% load staticfiles %}
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script type="text/javascript" src="{% static 'home/js/jquery.mousewheel.min.js' %}"></script>-->
+    <script type="text/javascript" src="{% static 'home/js/jquery.carousel-1.1.js' %}"></script>
     <script type="text/javascript" src="{% static 'home/js/backtotop.js' %}"></script>
     <script type="text/javascript" src="{% static 'home/js/jquery.nav.js' %}"></script>
     <script type="text/javascript" src="{% static 'home/js/wow.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'home/js/lightbox.js' %}"></script>
     <script type="text/javascript" src="{% static 'home/js/recent.js' %}"></script>
     <script type="text/javascript" src="{% static 'home/js/reg.js' %}"></script>
-    <script type="text/javascript" src="{% static 'home/js/jquery.carousel-1.1.js' %}"></script>
-    <script type="text/javascript" src="{% static 'home/js/jquery.mousewheel.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'home/js/custom.js' %}"></script>
     <script src="https://use.fontawesome.com/618e19295e.js"></script>
     <script type="text/javascript">
