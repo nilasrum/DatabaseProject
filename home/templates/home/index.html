@@ -5,7 +5,7 @@
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACM Lab</title>
-    {% load staticfiles %}
+    {% load staticfiles %} {% load fiter_tag_home %}
     <!-- font -->
     <link href="https://fonts.googleapis.com/css?family=Federo" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Italiana" rel="stylesheet">
@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/lightbox.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/carousel.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/login.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/galley-effect.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/main.css' %}" />
 </head>
 
@@ -43,6 +44,8 @@
                 <li><a href="#hall">hall of fame</a></li>
                 <li><a href="#contact-us">contact</a></li>
                 {% if user.is_authenticated %}
+                <li><a href="news">news</a></li>
+                <li><a href="#member">members</a></li>
                 <li class="dropdown">
                     <a href="#logout" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" style="margin-right:8px;"></i>{{user}}</a>
                     <ul class="dropdown-menu logout-style wow fadeInDown">
@@ -174,10 +177,29 @@
                                 <p><span>Place and time :</span>{{upc.date}}</p>
                             </div>
                             <div class="news-desc">
-                                <p>{{upc.description}}</p>
+                                <p>{{ upc.description|str_cut }}
+                                    <br/><a class="more" href="#" data-toggle="modal" data-target="#{{upc.id}}">Read more</a>
+                                </p>
                             </div>
                         </div>
                     </div>
+                    <!-- Modal-->
+                    <div class="modal fade" id="{{upc.id}}" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">{{upc.title}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{upc.description}}</p>
+                                </div>
+                            </div>
+                            <!-- //Modal content-->
+                        </div>
+                    </div>
+                    <!-- //Modal-->
                     {% endfor %}
                 </div>
             </div>
@@ -253,13 +275,22 @@
                         </h2>
                         <div class="border"></div>
                     </div>
-                    <div class="container">
-                        <div class="gallery-tab">
-                            <div class="photo-window group">
-                                {% for gal in all_gallery %}
-                                <a href="{{gal.image_url.url}}" data-lightbox="gallery" data-title="{{gal.title}}"><img src="{{gal.image_url.url}}" alt="image-1"></a>
-                                {% endfor %}
+                    <div class="gallery-tab">
+                        <div class="photo-window">
+                            {% for gal in all_gallery %}
+                            <div class="col-md-4 full-box">
+                                <!--<a href="{{gal.image_url.url}}" data-lightbox="gallery" data-title="{{gal.title}}"><img src="{{gal.image_url.url}}" alt="image-1"></a>-->
+                                <div class="grid">
+                                    <figure class="effect-layla">
+                                        <img src="{{gal.image_url.url}}" alt="img04" />
+                                        <a href="{{gal.image_url.url}}" data-lightbox="gallery" data-title="{{gal.title}}"></a>
+                                        <figcaption>
+                                            <p>{{gal.title}}</p>
+                                        </figcaption>
+                                    </figure>
+                                </div>
                             </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
