@@ -64,12 +64,10 @@
                             <form id="ajax-login-form" action="{% url 'home:login' %}" method="post" role="form" autocomplete="off">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <label for="username">Username</label>
                                     <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" autocomplete="off">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password">Password</label>
                                     <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" autocomplete="off">
                                 </div>
 

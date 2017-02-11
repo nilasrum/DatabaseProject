@@ -5,8 +5,8 @@ from django.contrib.auth import authenticate,login,logout
 from django.views import generic
 from django.views.generic import View
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
-from .forms import UserForm,LoginForm
-from .models import Gallery,About,Recent,Upcoming,UserInfo,Hall_of_fame
+from .forms import UserForm,LoginForm,StudentProfileForm,RegistrationForm
+from .models import Gallery,About,Recent,Upcoming,HallOfFame,StudentProfile
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
@@ -14,6 +14,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.forms import inlineformset_factory
+from django import forms
+from django.views.generic import FormView
 
 
 # self_defined useful functions
@@ -26,14 +29,11 @@ def admin_error(request):
 def cbv_decorator(decorator):
     """
     Turns a normal view decorator into a class-based-view decorator.
-
     Usage:
-
     @cbv_decorator(login_required)
     class MyClassBasedView(View):
         pass
     """
-
     def _decorator(cls):
         cls.dispatch = method_decorator(decorator)(cls.dispatch)
         return cls
@@ -49,7 +49,7 @@ def index(request):
     all_upcoming = Upcoming.objects.all()
     all_about = About.objects.all()
     all_gallery = Gallery.objects.all()
-    all_hall = Hall_of_fame.objects.all()
+    all_hall = HallOfFame.objects.all()
     context = {
         'all_about':all_about,
         'all_recent':all_recent,
@@ -85,6 +85,39 @@ def login_form_view(request):
     return render(request, 'home/loginform.html', {'form': form})
 
 
+class RegisterView(FormView):
+    template_name = "home/regform.html"
+    form_class = RegistrationForm
+
+    #def form_valid(self, form):
+    def get(self,request):
+        form = self.form_class(None)
+        return render(request,self.template_name,{'form':form})
+
+    def post(self,request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            new_user = User.objects.create_user(username=username, email=form.cleaned_data['email'],password=password)
+            new_user.set_password(password)
+            new_user.save()
+            name = form.cleaned_data['name']
+            reg = form.cleaned_data['reg']
+            session = form.cleaned_data['session']
+            profile = StudentProfile.objects.create(user=new_user,name=name,reg=reg,session=session)
+            profile.save()
+            user = authenticate(username=username,password=password)
+
+            if user is not None:
+                if user.is_active:
+                    login(request,user)
+                    return redirect('home:index')
+
+        return render(request, self.template_name, {'form': form})
+
+
 class UserFormView(View):
     form_class = UserForm
     template_name = 'home/regform.html'
@@ -102,18 +135,6 @@ class UserFormView(View):
             new_user = User.objects.create_user(username=username, email=form.cleaned_data['email'],password=password)
             new_user.set_password(password)
             new_user.save()
-            userinfo = UserInfo.objects.create(
-                email=form.cleaned_data['email'],
-                username=form.cleaned_data['username'],
-                password=form.cleaned_data['password'],
-                name = form.cleaned_data['name'],
-                reg = form.cleaned_data['reg'],
-                session = form.cleaned_data['session'],
-                service = form.cleaned_data['service'],
-                add = form.cleaned_data['add'],
-                phn = form.cleaned_data['phn'],
-            )
-            userinfo.save()
 
             user = authenticate(username=username,password=password)
 
@@ -166,24 +187,23 @@ class DeleteUpcoming(DeleteView):
 
 @cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
 class CreateHalloffame(CreateView):
-    model = Hall_of_fame
-    fields = ['teamname','member1','member2','member3','description','image_url']
+    model = HallOfFame
+    fields = ['teamname','member1','member2','member3','coach','top10','top5','champion','description','image_url']
 
 
 def halloffame_detail(request,id):
-    team = get_object_or_404(Hall_of_fame,id=id)
+    team = get_object_or_404(HallOfFame,id=id)
     return render(request,'home/team_detail.html',{'team':team})
 
 
 @cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
 class UpdateHalloffame(UpdateView):
-    model = Hall_of_fame
-    fields = ['teamname','member1','member2','member3','description','image_url']
+    model = HallOfFame
+    fields = ['teamname','member1','member2','member3','coach','top10','top5','champion','description','image_url']
 
 
 @cbv_decorator(user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err')))
 class DeleteHalloffame(DeleteView):
-    model = Hall_of_fame
+    model = HallOfFame
     success_url = reverse_lazy('home:index')
-
 

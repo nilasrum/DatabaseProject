@@ -1,17 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 
-class UserInfo(models.Model):
-    email = models.CharField(max_length=100)
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
+class StudentProfile(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     reg = models.CharField(max_length=12)
     session = models.CharField(max_length=20)
-    service = models.CharField(max_length=200)
-    add = models.CharField(max_length=500)
-    phn = models.CharField(max_length=100)
 
 
 class About(models.Model):
@@ -47,11 +43,16 @@ class Gallery(models.Model):
         return self.title
 
 
-class Hall_of_fame(models.Model):
+class HallOfFame(models.Model):
     teamname = models.CharField(max_length=100)
     member1 = models.CharField(max_length=100)
     member2 = models.CharField(max_length=100)
     member3 = models.CharField(max_length=100)
+    coach = models.CharField(max_length=100)
+    participated = models.IntegerField()
+    top10 = models.IntegerField()
+    top5 = models.IntegerField()
+    champion = models.IntegerField()
     description = models.TextField(max_length=2000)
     image_url = models.FileField()
 
