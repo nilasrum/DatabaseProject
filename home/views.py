@@ -6,7 +6,7 @@ from django.views import generic
 from django.views.generic import View
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from .forms import UserForm,LoginForm,StudentProfileForm,RegistrationForm
-from .models import Gallery,About,Recent,Upcoming,HallOfFame,StudentProfile
+from .models import Gallery,About,Recent,Upcoming,HallOfFame,StudentProfile,ActivationStatus
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
@@ -17,7 +17,7 @@ from django.utils.decorators import method_decorator
 from django.forms import inlineformset_factory
 from django import forms
 from django.views.generic import FormView
-
+from django.core.mail import send_mail
 
 # self_defined useful functions
 # --------------------------------------------
@@ -76,20 +76,48 @@ def login_form_view(request):
     if form.is_valid():
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
+        user = User.objects.get(username=username)
+        if user.is_superuser:
+            user = authenticate(username=username, password=password)
+            if user is not None and user.is_active:
                 login(request, user)
                 return redirect('home:index')
+        try:
+            status = ActivationStatus.objects.get(user=user)
+            if status.status is True:
+                user = authenticate(username=username, password=password)
+                if user is not None and user.is_active:
+                    login(request, user)
+                    return redirect('home:index')
+            else:
+                return render(request,'home/account_not_activated.html')
+        except User.DoesNotExist:
+            return render(request, 'home/loginform.html', {'form': form})
 
     return render(request, 'home/loginform.html', {'form': form})
+
+
+@user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err'))
+def activate_account(request,id):
+    status = ActivationStatus.objects.get(id=id)
+    status.status=True
+    status.save()
+    email = status.user.email
+    send_mail(
+        'Welcome To Acmlab,SUST',
+        'Your account is now activated.\n Visit acm lab,SUST to check and configure your profile',
+        'acmlabsust@example.com',
+        [email],
+        fail_silently=True,
+    )
+    name = status.user.username
+    return render(request,'home/account_approved.html',{'name':name})
 
 
 class RegisterView(FormView):
     template_name = "home/regform.html"
     form_class = RegistrationForm
 
-    #def form_valid(self, form):
     def get(self,request):
         form = self.form_class(None)
         return render(request,self.template_name,{'form':form})
@@ -108,40 +136,9 @@ class RegisterView(FormView):
             session = form.cleaned_data['session']
             profile = StudentProfile.objects.create(user=new_user,name=name,reg=reg,session=session)
             profile.save()
-            user = authenticate(username=username,password=password)
-
-            if user is not None:
-                if user.is_active:
-                    login(request,user)
-                    return redirect('home:index')
-
-        return render(request, self.template_name, {'form': form})
-
-
-class UserFormView(View):
-    form_class = UserForm
-    template_name = 'home/regform.html'
-
-    def get(self,request):
-        form = self.form_class(None)
-        return render(request,self.template_name,{'form':form})
-
-    def post(self,request):
-        form = self.form_class(request.POST)
-
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            new_user = User.objects.create_user(username=username, email=form.cleaned_data['email'],password=password)
-            new_user.set_password(password)
-            new_user.save()
-
-            user = authenticate(username=username,password=password)
-
-            if user is not None:
-                if user.is_active:
-                    login(request,user)
-                    return redirect('home:index')
+            activation = ActivationStatus.objects.create(user=new_user,status=False)
+            activation.save()
+            return render(request,'home/reg_admin_pending.html')
 
         return render(request, self.template_name, {'form': form})
 

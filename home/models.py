@@ -9,6 +9,17 @@ class StudentProfile(models.Model):
     reg = models.CharField(max_length=12)
     session = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.name
+
+
+class ActivationStatus(models.Model):
+    user = models.ForeignKey(User)
+    status = models.BooleanField()
+
+    def __str__(self):
+        return str(self.id)+" "+self.user.username
+
 
 class About(models.Model):
     image_url = models.FileField()
@@ -24,6 +35,9 @@ class Recent(models.Model):
     description = models.TextField(max_length=2000)
     image_url = models.FileField()
 
+    def __str__(self):
+        return self.title
+
 
 class Upcoming(models.Model):
     title = models.CharField(max_length=500)
@@ -33,6 +47,9 @@ class Upcoming(models.Model):
 
     def get_absolute_url(self):
         return reverse('home:index')
+
+    def __str__(self):
+        return self.title
 
 
 class Gallery(models.Model):
@@ -58,3 +75,6 @@ class HallOfFame(models.Model):
 
     def get_absolute_url(self):
         return reverse('home:index')
+
+    def __str__(self):
+        return self.teamname

@@ -5,9 +5,10 @@ app_name = 'home'
 
 urlpatterns = [
     url(r'^$', views.index,name='index'),
-    url(r'^register/$', views.RegisterView.as_view(),name='register'),
-    url(r'^login/$', views.login_form_view, name='login'),
-    url(r'^logout/$', views.logout_req,name='logout'),
+    url(r'^accounts/register/$', views.RegisterView.as_view(),name='register'),
+    url(r'^accounts/login/$', views.login_form_view, name='login'),
+    url(r'^accounts/logout/$', views.logout_req,name='logout'),
+    url(r'^accounts/activate/(?P<id>[0-9]+)/$', views.activate_account,name='account-activate'),
 
     url(r'^add/upcoming/$', views.CreateUpcoming.as_view(), name='add-upcoming'),
     url(r'^upcoming/(?P<id>[0-9]+)/$', views.upcoming_detail,name='upcoming-detail'),

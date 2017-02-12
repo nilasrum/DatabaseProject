@@ -22,7 +22,6 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-#test
 class CombinedFormBase(forms.Form):
     form_classes = []
 
