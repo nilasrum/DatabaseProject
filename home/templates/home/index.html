@@ -39,19 +39,27 @@
             <ul id="nav" class="nav navbar-nav">
                 <li><a href="#home" id="h">Home</a></li>
                 <li><a href="#about">About Us</a></li>
+                <li><a href="#hall">hall of fame</a></li>
                 <li><a href="#upcoming">Events</a></li>
                 <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#hall">hall of fame</a></li>
                 <li><a href="#contact-us">contact</a></li>
                 {% if user.is_authenticated %}
-                <li><a href="news">news</a></li>
-                <li><a href="#member">members</a></li>
                 <li class="dropdown">
-                    <a href="#logout" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" style="margin-right:8px;"></i>{{user}}</a>
+                    {% if user.is_superuser %}
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" style="margin-right:8px;"></i>{{user}}<span class="badge" style="background-color:red;margin-left:4px;">{{reqnum}}</span></a>
                     <ul class="dropdown-menu logout-style wow fadeInDown">
+                        <div class="logout-menu"><i class="fa fa-bell fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:notification-list' %}">Notification</a></div>
                         <div class="logout-menu"><i class="fa fa-smile-o fa-lg" style="padding-right:10px;"></i><a href="#">Profile</a></div>
                         <div class="logout-menu"><i class="fa fa-power-off fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:logout' %}">Logout</a></div>
                     </ul>
+                    {% else %}
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" style="margin-right:8px;"></i>{{user}}<span class="badge" style="background-color:red;margin-left:4px;">{{msgnum}}</span></a>
+                    <ul class="dropdown-menu logout-style wow fadeInDown">
+                        <div class="logout-menu"><i class="fa fa-bell fa-lg" style="padding-right:10px;"></i><a href="#">Notification</a></div>
+                        <div class="logout-menu"><i class="fa fa-smile-o fa-lg" style="padding-right:10px;"></i><a href="#">Profile</a></div>
+                        <div class="logout-menu"><i class="fa fa-power-off fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:logout' %}">Logout</a></div>
+                    </ul>
+                    {% endif %}
                 </li>
                 {% else %}
                 <!-- check-->
@@ -64,11 +72,11 @@
                             <form id="ajax-login-form" action="{% url 'home:login' %}" method="post" role="form" autocomplete="off">
                                 {% csrf_token %}
                                 <div class="form-group">
-                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" autocomplete="off">
+                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="username" value="" autocomplete="off" required="True">
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" autocomplete="off">
+                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="password" autocomplete="off" required="True">
                                 </div>
 
                                 <div class="form-group">
@@ -137,7 +145,48 @@
         </div>
     </section>
     <!--about section end-->
-
+    <!--halloffame section start-->
+    <section id="hall">
+        <div class="hall-section">
+            <div class="container">
+                <div class="row">
+                    <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
+                        <h2>Hall of<span class="two-color"> fame</span>
+                            {% if user.is_superuser %}
+                            <a href="{% url 'home:add-halloffame' %}" class="edit-ico"><i class="fa fa-edit">ADD</i></a>
+                            {% endif %}
+                        </h2>
+                        <div class="border"></div>
+                    </div>
+                    <div class="quote-tag">
+                        <i class="fa fa-quote-left"></i><span class="hall-quote"> ...standing in the hall of fame and the worlds gonna know your name... </span><i class="fa fa-quote-right"></i></div>
+                    <div class="carousel">
+                        <!-- BEGIN CAROUSEL -->
+                        <div class="slides">
+                            <!-- BEGIN SLIDES -->
+                            {% for hall in all_hall %}
+                            <div>
+                                <!-- SLIDE ITEM -->
+                                <a href="{% url 'home:detail-halloffame' hall.id %}" class="image-border"><img src="{{hall.image_url.url}}" /></a>
+                                <!--description(main)/slide(jquery.carousel)/-->
+                                <div class="description">
+                                    <div class="team-tag">
+                                        <i class="fa fa-snowflake-o" style="margin-right:10px;"></i>
+                                        <spna class="team-name">{{hall.teamname}}</spna>
+                                        <i class="fa fa-snowflake-o" style="margin-left:10px;"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <!-- END SLIDES -->
+                    </div>
+                </div>
+                <!-- END CAROUSEL -->
+            </div>
+        </div>
+    </section>
+    <!--halloffame section end-->
     <!--upcoming section start -->
     <section id="upcoming">
         <div class="upcoming-section">
@@ -324,49 +373,6 @@
             </div>
         </div>
     </section>
-    <!--halloffame section start-->
-    <section id="hall">
-        <div class="hall-section">
-            <div class="container">
-                <div class="row">
-                    <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
-                        <h2>Hall of<span class="two-color"> fame</span>
-                            {% if user.is_superuser %}
-                            <a href="{% url 'home:add-halloffame' %}" class="edit-ico"><i class="fa fa-edit">ADD</i></a>
-                            {% endif %}
-                        </h2>
-                        <div class="border"></div>
-                    </div>
-                    <div class="quote-tag">
-                        <i class="fa fa-quote-left"></i><span class="hall-quote"> ...standing in the hall of fame and the worlds gonna know your name... </span><i class="fa fa-quote-right"></i></div>
-                    <div class="carousel">
-                        <!-- BEGIN CAROUSEL -->
-                        <div class="slides">
-                            <!-- BEGIN SLIDES -->
-                            {% for hall in all_hall %}
-                            <div>
-                                <!-- SLIDE ITEM -->
-                                <a href="{% url 'home:detail-halloffame' hall.id %}" class="image-border"><img src="{{hall.image_url.url}}" /></a>
-                                <!--description(main)/slide(jquery.carousel)/-->
-                                <div class="description">
-                                    <div class="team-tag">
-                                        <i class="fa fa-snowflake-o" style="margin-right:10px;"></i>
-                                        <spna class="team-name">{{hall.teamname}}</spna>
-                                        <i class="fa fa-snowflake-o" style="margin-left:10px;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <!-- END SLIDES -->
-                    </div>
-                </div>
-                <!-- END CAROUSEL -->
-            </div>
-        </div>
-
-    </section>
-    <!--halloffame section end-->
     <!-- contact section-->
     <section id="contact-us" class="contact-section">
         <div class="container">

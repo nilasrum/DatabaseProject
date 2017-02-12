@@ -13,10 +13,10 @@
         <form class="form-login" role="form" action="" method="post">
             {% csrf_token %}
             <span class="fa fa-user"></span>
-            <input type="text" name="username" placeholder="Username">
+            <input type="text" name="username" placeholder="Username" required="True">
 
             <span class="fa fa-lock"></span>
-            <input type="password" name="password" placeholder="Password">
+            <input type="password" name="password" placeholder="Password" required="True">
 
             <input type="submit" value="Login">
             <a href="">click here to register</a>

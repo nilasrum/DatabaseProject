@@ -7,6 +7,7 @@ from django.views.generic import View
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from .forms import UserForm,LoginForm,StudentProfileForm,RegistrationForm
 from .models import Gallery,About,Recent,Upcoming,HallOfFame,StudentProfile,ActivationStatus
+from notification.models import Notification
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
@@ -50,13 +51,24 @@ def index(request):
     all_about = About.objects.all()
     all_gallery = Gallery.objects.all()
     all_hall = HallOfFame.objects.all()
-    context = {
-        'all_about':all_about,
-        'all_recent':all_recent,
-        'all_upcoming':all_upcoming,
-        'all_gallery':all_gallery,
-        'all_hall':all_hall
-    }
+    reqnum = Notification.objects.filter(viewed=False).count()
+    if reqnum >0 :
+        context = {
+            'all_about':all_about,
+            'all_recent':all_recent,
+            'all_upcoming':all_upcoming,
+            'all_gallery':all_gallery,
+            'all_hall':all_hall,
+            'reqnum':reqnum
+            }
+    else:
+        context = {
+            'all_about': all_about,
+            'all_recent': all_recent,
+            'all_upcoming': all_upcoming,
+            'all_gallery': all_gallery,
+            'all_hall': all_hall,
+        }
     return render(request,'home/index.html',context)
 
 
@@ -97,11 +109,17 @@ def login_form_view(request):
     return render(request, 'home/loginform.html', {'form': form})
 
 
+#account-activation
+#-----------------------------------------
+
 @user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err'))
 def activate_account(request,id):
     status = ActivationStatus.objects.get(id=id)
     status.status=True
     status.save()
+    notification = Notification.objects.get(user=status.user)
+    notification.viewed=True
+    notification.save()
     email = status.user.email
     send_mail(
         'Welcome To Acmlab,SUST',
@@ -111,7 +129,7 @@ def activate_account(request,id):
         fail_silently=True,
     )
     name = status.user.username
-    return render(request,'home/account_approved.html',{'name':name})
+    return redirect('home:notification-list')
 
 
 class RegisterView(FormView):
@@ -143,6 +161,26 @@ class RegisterView(FormView):
         return render(request, self.template_name, {'form': form})
 
 
+@user_passes_test(lambda u:u.is_staff, login_url=reverse_lazy('home:admin-err'))
+def notification_list(request):
+    all_req = Notification.objects.filter(viewed=False)
+    class FullProfile(object):
+        pass
+    pro_list = []
+    for req in all_req:
+        x = FullProfile()
+        x.mark_id = req.id
+        x.id = ActivationStatus.objects.get(user=req.user).id
+        x.email = req.user.email
+        x.username = req.user.username
+        #print req.user.username, req.user.email
+        x.name = StudentProfile.objects.get(user=req.user).name
+        x.reg = StudentProfile.objects.get(user=req.user).reg
+        x.session = StudentProfile.objects.get(user=req.user).session
+        pro_list.append(x)
+    #print pro_list[0].email,pro_list[1].email
+    return render(request,'home/notification_list.html',{'all_req':pro_list})
+
 # about-section
 # -------------------------------
 
@@ -155,7 +193,7 @@ class UpdateAbout(UpdateView):
 # upcoming-section
 # ---------------------------------------
 
-def upcoming_detail(requst,id):
+def upcoming_detail(id):
     instance = get_object_or_404(Upcoming,id=id)
     return HttpResponse('<h2>hi there '+instance.title+' </h2>')
 

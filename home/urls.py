@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^accounts/login/$', views.login_form_view, name='login'),
     url(r'^accounts/logout/$', views.logout_req,name='logout'),
     url(r'^accounts/activate/(?P<id>[0-9]+)/$', views.activate_account,name='account-activate'),
+    url(r'^notification/list/$', views.notification_list,name='notification-list'),
 
     url(r'^add/upcoming/$', views.CreateUpcoming.as_view(), name='add-upcoming'),
     url(r'^upcoming/(?P<id>[0-9]+)/$', views.upcoming_detail,name='upcoming-detail'),

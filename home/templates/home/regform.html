@@ -17,34 +17,26 @@
   <ul id="progressbar">
     <li class="active">Account Setup</li>
     <li>Student Profiles</li>
-    <li>Personal Details</li>
   </ul>
   <!-- fieldsets -->
   <fieldset>
     <h2 class="fs-title">Create your account</h2>
     <h3 class="fs-subtitle">This is step 1</h3>
-    <input type="text" name="username" placeholder="username" />
-    <input type="email" name="email" placeholder="Email" />
-    <input type="password" name="password" placeholder="Password" />
+    <input type="text" name="username" placeholder="username" required="True"/>
+    <input type="email" name="email" placeholder="Email" required="True"/>
+    <input type="password" name="password" placeholder="Password" required="True"/>
     <input type="button" name="next" class="next action-button" value="Next" />
+    <a href="{% url 'home:login' %}"><p>already have an account? login</p></a>
   </fieldset>
   <fieldset>
     <h2 class="fs-title">Student Profiles</h2>
     <h3 class="fs-subtitle">Your student info</h3>
-    <input type="text" name="name" placeholder="name" />
-    <input type="text" name="reg" placeholder="reg_num" />
-    <input type="text" name="session" placeholder="session" />
-    <input type="button" name="previous" class="previous action-button" value="Previous" />
-    <input type="button" name="next" class="next action-button" value="Next" />
-  </fieldset>
-  <fieldset>
-    <h2 class="fs-title">Personal Details</h2>
-    <h3 class="fs-subtitle">Available to other member only</h3>
-    <input type="text" name="service" placeholder="service" />
-    <input type="text" name="phn" placeholder="Phone" />
-    <textarea name="add" placeholder="Address"></textarea>
+    <input type="text" name="name" placeholder="name" required="True"/>
+    <input type="text" name="reg" placeholder="reg_num" required="True"/>
+    <input type="text" name="session" placeholder="session" required="True"/>
     <input type="button" name="previous" class="previous action-button" value="Previous" />
     <input type="submit" name="submit" class="submit action-button" value="Submit" />
+    <a href="{% url 'home:login' %}"><p>already have an account? login</p></a>
   </fieldset>
 </form>
   {% load staticfiles %}

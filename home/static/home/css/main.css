@@ -74,6 +74,11 @@
     outline: none;
 }
 
+.badge {
+    background-color: red;
+    margin-left: 2px;
+}
+
 
 /*navigation panel end */
 

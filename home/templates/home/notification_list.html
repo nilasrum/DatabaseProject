@@ -1,0 +1,20 @@
+<ul>
+    {% for req in all_req %}
+    <li>
+        <div class="col-md-6">
+            {{req.username}}
+            {{req.email}}
+            {{req.phone}}
+        </div>
+        <div class="col-md-6">
+            {{req.name}}
+            {{req.reg}}
+            {{req.session}}
+        </div>
+        <div>
+            <a href="{% url 'home:account-activate' req.id %}"><button>approve</button></a>
+            <a href="{% url 'notification:del-notification' req.mark_id %}"><button>mark as seen</button></a>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
