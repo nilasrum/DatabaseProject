@@ -8,7 +8,6 @@
     {% load staticfiles %} {% load fiter_tag_home %}
     <!-- font -->
     <link href="https://fonts.googleapis.com/css?family=Federo" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Italiana" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
     <!-- Load css styles -->
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap.min.css' %}" />
@@ -46,10 +45,11 @@
                 {% if user.is_authenticated %}
                 <li class="dropdown">
                     {% if user.is_superuser %}
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" style="margin-right:8px;"></i>{{user}}<span class="badge" style="background-color:red;margin-left:4px;">{{reqnum}}</span></a>
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" style="margin-right:8px;"></i>{{user}}<span class="badge" style="background-color:red;margin-left:4px;">{{reqnum}}</span></a>
                     <ul class="dropdown-menu logout-style wow fadeInDown">
                         <div class="logout-menu"><i class="fa fa-bell fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:notification-list' %}">Notification</a></div>
                         <div class="logout-menu"><i class="fa fa-smile-o fa-lg" style="padding-right:10px;"></i><a href="#">Profile</a></div>
+                        <div class="logout-menu"><i class="fa fa-users fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:member-list' %}">members</a></div>
                         <div class="logout-menu"><i class="fa fa-power-off fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:logout' %}">Logout</a></div>
                     </ul>
                     {% else %}
@@ -57,6 +57,7 @@
                     <ul class="dropdown-menu logout-style wow fadeInDown">
                         <div class="logout-menu"><i class="fa fa-bell fa-lg" style="padding-right:10px;"></i><a href="#">Notification</a></div>
                         <div class="logout-menu"><i class="fa fa-smile-o fa-lg" style="padding-right:10px;"></i><a href="#">Profile</a></div>
+                        <div class="logout-menu"><i class="fa fa-users fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:member-list' %}">members</a></div>
                         <div class="logout-menu"><i class="fa fa-power-off fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:logout' %}">Logout</a></div>
                     </ul>
                     {% endif %}

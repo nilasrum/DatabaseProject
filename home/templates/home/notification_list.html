@@ -1,5 +1,14 @@
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/main.css' %}" />
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 <ul>
-    {% for req in all_req %}
+    {% for req in new_req %}
     <li>
         <div class="col-md-6">
             {{req.username}}
@@ -17,4 +26,30 @@
         </div>
     </li>
     {% endfor %}
+    <div>
+        <button type="button" data-toggle="collapse" data-target=".req-collapse">older request</button>
+    </div>
+
+        <div class="collapse req-collapse">
+            <ul>
+                {% for req in old_req %}
+    <li>
+        <div class="col-md-6">
+            {{req.username}}
+            {{req.email}}
+            {{req.phone}}
+        </div>
+        <div class="col-md-6">
+            {{req.name}}
+            {{req.reg}}
+            {{req.session}}
+        </div>
+        <div>
+            <a href="{% url 'home:account-activate' req.id %}"><button>approve</button></a>
+        </div>
+    </li>
+    {% endfor %}
+            </ul>
+        </div>
+    <a href="{% url 'home:index' %}"><h3>home</h3></a>
 </ul>

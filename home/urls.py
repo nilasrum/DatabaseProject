@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^upcoming/(?P<pk>[0-9]+)/edit/$', views.UpdateUpcoming.as_view(),name='edit-upcoming'),
     url(r'^upcoming/(?P<pk>[0-9]+)/delete/$', views.DeleteUpcoming.as_view(),name='delete-upcoming'),
 
+    url(r'^member/list/$', views.member_list,name='member-list'),
+    
     url(r'^add/halloffame/$', views.CreateHalloffame.as_view(),name='add-halloffame'),
     url(r'^halloffame/(?P<id>[0-9]+)/$', views.halloffame_detail,name='detail-halloffame'),
     url(r'^halloffame/(?P<pk>[0-9]+)/edit/$', views.UpdateHalloffame.as_view(),name='edit-halloffame'),

@@ -22,9 +22,16 @@
   <fieldset>
     <h2 class="fs-title">Create your account</h2>
     <h3 class="fs-subtitle">This is step 1</h3>
+    <!--<div class="checkboxFour">
+        <p>checkbox</p>
+  		<input type="checkbox" id="checkboxFourInput" name="status" required="True" />
+	  	<label for="checkboxFourInput"></label>
+  	</div>-->
     <input type="text" name="username" placeholder="username" required="True"/>
     <input type="email" name="email" placeholder="Email" required="True"/>
-    <input type="password" name="password" placeholder="Password" required="True"/>
+    <input type="password" name="password" placeholder="Password" required="True"/><br/>
+    <input type="checkbox" id="squaredTwo" name="status"/>
+      <label for="squaredTwo">current student</label><br/>
     <input type="button" name="next" class="next action-button" value="Next" />
     <a href="{% url 'home:login' %}"><p>already have an account? login</p></a>
   </fieldset>

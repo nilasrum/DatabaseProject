@@ -14,7 +14,7 @@ class StudentProfileForm(forms.ModelForm):
 
     class Meta:
         model = StudentProfile
-        fields = ['name','reg','session']
+        fields = ['name','reg','session','status']
 
 
 class LoginForm(forms.Form):
