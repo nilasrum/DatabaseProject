@@ -55,8 +55,8 @@
                     {% else %}
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user" style="margin-right:8px;"></i>{{user}}<span class="badge" style="background-color:red;margin-left:4px;">{{msgnum}}</span></a>
                     <ul class="dropdown-menu logout-style wow fadeInDown">
-                        <div class="logout-menu"><i class="fa fa-bell fa-lg" style="padding-right:10px;"></i><a href="#">Notification</a></div>
-                        <div class="logout-menu"><i class="fa fa-smile-o fa-lg" style="padding-right:10px;"></i><a href="#">Profile</a></div>
+                        <div class="logout-menu"><i class="fa fa-bell fa-lg" style="padding-right:10px;"></i><a href="{% url 'news:news-page' %}">Notification</a></div>
+                        <div class="logout-menu"><i class="fa fa-smile-o fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:member-profile-st' user.id %}">Profile</a></div>
                         <div class="logout-menu"><i class="fa fa-users fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:member-list' %}">members</a></div>
                         <div class="logout-menu"><i class="fa fa-power-off fa-lg" style="padding-right:10px;"></i><a href="{% url 'home:logout' %}">Logout</a></div>
                     </ul>
@@ -464,7 +464,7 @@
     <script type="text/javascript" src="{% static 'home/js/custom.js' %}"></script>
     <script src="https://use.fontawesome.com/618e19295e.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
 
             $('.carousel').carousel({
                 hAlign: 'center',
@@ -476,7 +476,7 @@
         });
     </script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             'use strict';
             $('#nav').onePageNav({
                 currentClass: 'current',
@@ -486,7 +486,7 @@
         });
     </script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             'use strict';
             $("#h").click();
         });

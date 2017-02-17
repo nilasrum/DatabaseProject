@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ACM LAB,SUST</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+</head>
+
+<body>
+    <!-- multistep form -->
+    {{status}}
+    <form id="msform" role="form" action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="current_add" placeholder="current_add" value="{{current_add}}" />
+        <input type="text" name="permanent_add" placeholder="permanent_add" value="{{permanent_add}}" />
+        <input type="text" name="phone" placeholder="phone" value="{{phone}}" />
+        <input type="text" name="working" placeholder="working" value="{{working}}" />
+        <input type="text" name="about" placeholder="about" value="{{about}}" /><br/> {% if status is False %}
+        <input type="checkbox" name="status" /> {% else %}
+        <input type="checkbox" name="status" checked="True" /> {% endif %}
+        <input type="text" name="name" placeholder="name" value="{{name}}" />
+        <input type="text" name="reg" placeholder="reg_num" value="{{reg}}" />
+        <input type="text" name="session" placeholder="session" value="{{session}}" />
+        <input type="submit" name="submit" class="submit action-button" value="Submit" />
+    </form>
+    {% load staticfiles %}
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+    <script type="text/javascript" src="{% static 'home/js/reg.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>member profile</title>
+</head>
+
+<body>
+    <nav class="">
+        <ul id="nav" class="">
+            <li><a href="#" class="active">Student info</a></li>
+            <li><a href="{% url 'home:member-profile-oc' user.id %}">Online contest</a></li>
+            <li><a href="">Sust contest</a></li>
+        </ul>
+    </nav>
+    <a href="{% url 'home:member-profile-update-st' user.id %}">edit</a>
+    <ul>
+        <label>username : </label>
+        <li>{{user.username}}</li>
+        <label>email : </label>
+        <li>{{user.email}}</li>
+        <label>name : </label>
+        <li>{{user.name}}</li>
+        <label> reg : </label>
+        <li>{{user.reg}}</li>
+        <label>session : </label>
+        <li>{{user.session}}</li>
+        <label>current_add : </label>
+        <li>{{user.current_add}}</li>
+        <label>permanent_add : </label>
+        <li>{{user.permanent_add}}</li>
+        <label>about : </label>
+        <li>{{user.about}}</li>
+        <label>working at : </label>
+        <li>{{user.working}}</li>
+        <label>phone : </label>
+        <li>{{user.phone}}</li>
+    </ul>
+</body>
+
+</html>

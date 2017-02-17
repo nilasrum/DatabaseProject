@@ -1,5 +1,5 @@
 from django import forms
-from .models import StudentProfile
+from .models import StudentProfile, OnlineContestProfile, Bio
 from django.contrib.auth.models import User
 
 
@@ -8,18 +8,26 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['username','email','password']
+        fields = ['username', 'email', 'password']
+
 
 class StudentProfileForm(forms.ModelForm):
 
     class Meta:
         model = StudentProfile
-        fields = ['name','reg','session','status']
+        fields = ['name', 'reg', 'session', 'status']
 
 
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class BioForm(forms.Form):
+
+    class Meta:
+        model = Bio
+        fields = ['current_add', 'permanent_add', 'phone', 'about', 'working']
 
 
 class CombinedFormBase(forms.Form):
@@ -44,7 +52,7 @@ class CombinedFormBase(forms.Form):
         # is_valid will trigger clean method
         # so it should be called after all other forms is_valid are called
         # otherwise clean_data will be empty
-        if not super(CombinedFormBase, self).is_valid() :
+        if not super(CombinedFormBase, self).is_valid():
             isValid = False
         for f in self.form_classes:
             name = f.__name__.lower()
@@ -61,7 +69,17 @@ class CombinedFormBase(forms.Form):
         return cleaned_data
 
 
-
 class RegistrationForm(CombinedFormBase):
     form_classes = [UserForm, StudentProfileForm]
 
+
+class ProfileFormSt(forms.Form):
+    name = forms.CharField()
+    reg = forms.CharField()
+    session = forms.CharField()
+    status = forms.BooleanField()
+    current_add = forms.CharField()
+    permanent_add = forms.CharField()
+    about = forms.CharField()
+    phone = forms.CharField()
+    working = forms.CharField()

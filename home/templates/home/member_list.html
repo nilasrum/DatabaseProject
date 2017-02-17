@@ -11,7 +11,7 @@
     <ul>
         {% for member in all_member %}
         <li>
-            <a href="#">{{member.username}}</a>
+            <a href="{% url 'home:member-profile-st' member.id %}">{{member.username}}</a>
         </li>
         {% endfor %}
     </ul>
