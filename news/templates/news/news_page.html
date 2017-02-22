@@ -5,9 +5,42 @@
     <meta charset="utf-8">
     <title>news</title>
 </head>
+<ul>
+    <li><a href="#">news</a></li>
+    <li><a href="{% url 'news:contest-page' %}">contest</a></li>
+    <li><a href="{% url 'news:teams-page' %}">teams</a></li>
+</ul>
 
 <body>
-    <h1>This is news page</h1>
+    <a href="{% url 'news:add-admin-post' %}">new news</a>
+    <h1>most recent</h1> {% for news in recent %}
+    <h4>{{news.post}}</h4>
+    <p1>{{news.date}}</p1>
+    <div class="">
+        <form action="{% url 'news:delete-admin-post' news.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="" value="{{ upc.id }}" />
+            <button type="submit" class="btn-default mybtn">
+                <i class="fa fa-trash fa-lg">del</i>
+            </button>
+        </form>
+
+        <a class="btn-default" href="{% url 'news:edit-admin-post' news.id %}">edit<i class="fa fa-edit fa-lg"></i></a>
+    </div>
+    {% endfor %}
+    <h1>older</h1> {% for news in older %}
+    <h4>{{news.post}}</h4>
+    <p1>{{news.date}}</p1>
+    <div class="">
+        <form action="{% url 'news:delete-admin-post' news.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn-default mybtn">
+                <i class="fa fa-trash fa-lg">del</i>
+            </button>
+        </form>
+        <a class="btn-default" href="{% url 'news:edit-admin-post' news.id %}">edit<i class="fa fa-edit fa-lg"></i></a>
+    </div>
+    {% endfor %}
 </body>
 
 </html>

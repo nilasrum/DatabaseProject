@@ -35,7 +35,7 @@
     margin: 0;
 }
 
-.navbar-inverse .navbar-nav > li > a {
+.navbar-inverse .navbar-nav>li>a {
     text-transform: uppercase;
     vertical-align: middle;
     margin: 10px 3px;
@@ -53,23 +53,23 @@
     font-family: 'Federo', sans-serif;
 }
 
-#nav.nnav > li > a {
+#nav.nnav>li>a {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.navbar-inverse .navbar-nav > li.current > a {
+.navbar-inverse .navbar-nav>li.current>a {
     border: 1px solid #FFFFFF;
     color: #fff;
     background-color: #2B2C30;
     transition: border-color 1s ease;
 }
 
-.navbar-inverse .navbar-nav > li > a:hover {
+.navbar-inverse .navbar-nav>li>a:hover {
     color: #FFFFFF;
     border: 1px solid #FFFFFF;
 }
 
-.navbar-inverse .navbar-nav > li > a:focus {
+.navbar-inverse .navbar-nav>li>a:focus {
     color: #FFF;
     outline: none;
 }
@@ -336,8 +336,7 @@
     text-align: left;
 }
 
-.recent-info span,
-.recent-title h3 {
+.recent-info span, .recent-title h3 {
     color: #6CB670;
 }
 
@@ -372,8 +371,7 @@
     transition: left 0.75s ease-out;
 }
 
-.next:after,
-.prev:after {
+.next:after, .prev:after {
     content: '>';
     position: absolute;
     top: 50%;
@@ -397,8 +395,7 @@
     margin-right: 30px;
 }
 
-.next:hover:after,
-.prev:hover:after {
+.next:hover:after, .prev:hover:after {
     opacity: 0.7;
 }
 
@@ -491,7 +488,7 @@
     line-height: 10px;
 }
 
-.team-tag >i {
+.team-tag>i {
     margin-top: 5px;
 }
 
@@ -513,8 +510,7 @@
     margin-top: 25px;
 }
 
-.fa-quote-left,
-.fa-quote-right {
+.fa-quote-left, .fa-quote-right {
     vertical-align: top;
 }
 
@@ -553,9 +549,7 @@
     height: 38px;
 }
 
-.contact-form input:hover,
-.contact-form textarea:hover,
-#contact-submit:hover {
+.contact-form input:hover, .contact-form textarea:hover, #contact-submit:hover {
     border-color: #6CB670;
 }
 
@@ -583,8 +577,7 @@
     margin-bottom: 20px;
 }
 
-.con-info i,
-.con-info span {
+.con-info i, .con-info span {
     float: left;
 }
 
@@ -622,8 +615,7 @@
     transition: all .5s ease-in 0s;
 }
 
-.btn-green:focus,
-.btn-green:hover {
+.btn-green:focus, .btn-green:hover {
     background-color: #2F383D;
     color: #fff;
 }
@@ -686,7 +678,7 @@
     text-align: center;
 }
 
-.footer > p {
+.footer>p {
     color: #fff;
     margin: 0;
 }

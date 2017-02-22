@@ -23,6 +23,7 @@ from django.contrib import messages
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.decorators import login_required
+from home.uva import *
 
 # self_defined useful functions
 # --------------------------------------------
@@ -46,109 +47,6 @@ def cbv_decorator(decorator):
 
     return _decorator
 
-
-# test------------------------------------------------
-
-@login_required
-def member_profile_view_st(request, id):
-    user = User.objects.get(id=id)
-    if not ActivationStatus.objects.get(user=user).status:
-        raise Http404('user is not active or does not exist')
-
-    class FullMemberProfile(object):
-        pass
-    x = FullMemberProfile()
-    x.id = id
-    x.email = user.email
-    x.username = user.username
-    # print req.user.username, req.user.email
-    x.name = StudentProfile.objects.get(user=user).name
-    x.reg = StudentProfile.objects.get(user=user).reg
-    x.session = StudentProfile.objects.get(user=user).session
-    x.current_add = Bio.objects.get(user=user).current_add
-    x.permanent_add = Bio.objects.get(user=user).permanent_add
-    x.about = Bio.objects.get(user=user).about
-    x.working = Bio.objects.get(user=user).working
-    x.phone = Bio.objects.get(user=user).phone
-
-    return render(request, 'home/member_profile_st.html', {'user': x})
-
-
-def member_profile_view_oc(request, id):
-    user = User.objects.get(id=id)
-    if not ActivationStatus.objects.get(user=user).status:
-        raise Http404('user is not active or does not exist')
-
-    class FullMemberProfile(object):
-        pass
-    x = FullMemberProfile()
-    x.id = OnlineContestProfile.objects.get(user=user).id
-    x.rid = id
-    x.name = StudentProfile.objects.get(user=user).name
-    x.codeforces = OnlineContestProfile.objects.get(user=user).codeforces
-    x.topcode = OnlineContestProfile.objects.get(user=user).topcode
-    x.uva = OnlineContestProfile.objects.get(user=user).uva
-    x.hackerrank = OnlineContestProfile.objects.get(user=user).hackerrank
-
-    return render(request, 'home/member_profile_oc.html', {'user': x})
-
-
-@cbv_decorator(login_required)
-class UpdateProfileStView(FormView):
-    template_name = "home/member_st_form.html"
-    form_class = ProfileFormSt
-
-    def get(self, request, id):
-        user = User.objects.get(id=self.kwargs['id'])
-        profile = StudentProfile.objects.get(user=user)
-        bio = Bio.objects.get(user=user)
-        form = self.form_class()
-        context = {
-            'form': form,
-            'name': profile.name,
-            'reg': profile.reg,
-            'session': profile.session,
-            'status': profile.status,
-            'current_add': bio.current_add,
-            'permanent_add': bio.permanent_add,
-            'about': bio.about,
-            'phone': bio.phone,
-            'working': bio.working,
-        }
-        return render(request, self.template_name, context)
-
-    def post(self, request, id):
-        user = User.objects.get(id=self.kwargs['id'])
-        form = self.form_class(request.POST)
-        profile = StudentProfile.objects.get(user=user)
-        bio = Bio.objects.get(user=user)
-        profile.name = form.data['name']
-        profile.reg = form.data['reg']
-        profile.session = form.data['session']
-        if request.POST.get('status'):
-            profile.status = True
-            print profile.status
-        else:
-            profile.status = False
-        # print form.data['status'] + 'aaaaaaaaaaaaaaaaa'
-        bio.current_add = form.data['current_add']
-        bio.permanent_add = form.data['permanent_add']
-        bio.about = form.data['about']
-        bio.phone = form.data['phone']
-        bio.working = form.data['working']
-        profile.save()
-        bio.save()
-        return redirect('home:member-profile-st', id)
-
-        return render(request, self.template_name, {'form': form})
-
-
-class UpdateProfileOcView(UpdateView):
-    model = OnlineContestProfile
-    fields = ['codeforces', 'topcode', 'hackerrank', 'uva']
-
-    def get_success_url(self):
-        return reverse('home:member-profile-oc', kwargs={'id': self.object.user.id})
 # home page
 # ----------------------------------------------
 
@@ -346,9 +244,9 @@ def notification_list(request):
     return render(request, 'home/notification_list.html', context)
 
 
-# member list / profile
-# -------------------------------------
-
+# member list and user-profile
+# ---------------------------------------------------------------------------
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('home:admin-err'))
 def member_list(request):
     all_users = User.objects.all()
     all_member = []
@@ -356,6 +254,112 @@ def member_list(request):
         if not user.is_superuser and ActivationStatus.objects.get(user=user).status:
             all_member.append(user)
     return render(request, 'home/member_list.html', {'all_member': all_member})
+
+
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('home:admin-err'))
+def member_profile_view_st(request, id):
+    user = User.objects.get(id=id)
+    if not ActivationStatus.objects.get(user=user).status:
+        raise Http404('user is not active or does not exist')
+
+    class FullMemberProfile(object):
+        pass
+    x = FullMemberProfile()
+    x.id = id
+    x.email = user.email
+    x.username = user.username
+    # print req.user.username, req.user.email
+    x.status = StudentProfile.objects.get(user=user).status
+    x.propic = StudentProfile.objects.get(user=user).propic
+    x.name = StudentProfile.objects.get(user=user).name
+    x.reg = StudentProfile.objects.get(user=user).reg
+    x.session = StudentProfile.objects.get(user=user).session
+    x.current_add = Bio.objects.get(user=user).current_add
+    x.permanent_add = Bio.objects.get(user=user).permanent_add
+    x.about = Bio.objects.get(user=user).about
+    x.working = Bio.objects.get(user=user).working
+    x.phone = Bio.objects.get(user=user).phone
+
+    return render(request, 'home/member_profile_st.html', {'user': x})
+
+
+@user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('home:admin-err'))
+def member_profile_view_oc(request, id):
+    user = User.objects.get(id=id)
+    if not ActivationStatus.objects.get(user=user).status:
+        raise Http404('user is not active or does not exist')
+
+    class FullMemberProfile(object):
+        pass
+    x = FullMemberProfile()
+    x.id = OnlineContestProfile.objects.get(user=user).id
+    x.rid = id
+    x.name = StudentProfile.objects.get(user=user).name
+    x.codeforces = OnlineContestProfile.objects.get(user=user).codeforces
+    x.topcode = OnlineContestProfile.objects.get(user=user).topcode
+    x.uva = OnlineContestProfile.objects.get(user=user).uva
+    x.hackerrank = OnlineContestProfile.objects.get(user=user).hackerrank
+    return render(request, 'home/member_profile_oc.html', {'user': x})
+
+
+@cbv_decorator(user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('home:admin-err')))
+class UpdateProfileStView(FormView):
+    template_name = "home/member_st_form.html"
+
+    def get(self, request, id):
+        user = User.objects.get(id=self.kwargs['id'])
+        profile = StudentProfile.objects.get(user=user)
+        bio = Bio.objects.get(user=user)
+        form = ProfileFormSt(initial={
+            'name': profile.name,
+            'reg': profile.reg,
+            'session': profile.session,
+            'status': profile.status,
+            'current_add': bio.current_add,
+            'permanent_add': bio.permanent_add,
+            'about': bio.about,
+            'phone': bio.phone,
+            'working': bio.working,
+            'image_url': profile.propic.url,
+        })
+        # print "---------------------------", form.image_url
+        #form = CustomForm(initial={'Email': GetEmailString()})
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, id):
+        user = User.objects.get(id=self.kwargs['id'])
+        form = ProfileFormSt(request.POST, request.FILES)
+        profile = StudentProfile.objects.get(user=user)
+        bio = Bio.objects.get(user=user)
+        profile.name = form.data['name']
+        profile.reg = form.data['reg']
+        profile.session = form.data['session']
+        if request.FILES.get('image_url'):
+            profile.propic = request.FILES['image_url']
+        if request.POST.get('status'):
+            profile.status = True
+        else:
+            profile.status = False
+        # print form.data['status'] + 'aaaaaaaaaaaaaaaaa'
+        bio.current_add = form.data['current_add']
+        bio.permanent_add = form.data['permanent_add']
+        bio.about = form.data['about']
+        bio.phone = form.data['phone']
+        bio.working = form.data['working']
+        profile.save()
+        bio.save()
+        return redirect('home:member-profile-st', id)
+
+        return render(request, self.template_name, {'form': form})
+
+
+@cbv_decorator(user_passes_test(lambda u: u.is_authenticated, login_url=reverse_lazy('home:admin-err')))
+class UpdateProfileOcView(UpdateView):
+    model = OnlineContestProfile
+    fields = ['codeforces', 'topcode', 'hackerrank', 'uva']
+
+    def get_success_url(self):
+        return reverse('home:member-profile-oc', kwargs={'id': self.object.user.id})
 
 
 # about-section

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>news</title>
+</head>
+<ul>
+    <li><a href="{% url 'news:news-page' %}">news</a></li>
+    <li><a href="#">contest</a></li>
+    <li><a href="{% url 'news:teams-page' %}">teams</a></li>
+</ul>
+
+<body>
+    <a href="{% url 'news:add-contest' %}">new contest</a>
+    <h1>most recent</h1> {% for contest in recent %}
+    <h4><a href="{{contest.url}}">{{contest.title}}</a></h4>
+    <p1>{{contest.description}}</p1>
+    <p1>{{contest.date}}</p1>
+    <p1>{{contest.time}}</p1>
+    <p1>{{contest.duration}}</p1>
+    <div class="">
+        <form action="{% url 'news:delete-contest' contest.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="" value="{{ upc.id }}" />
+            <button type="submit" class="btn-default mybtn">
+                <i class="fa fa-trash fa-lg">del</i>
+            </button>
+        </form>
+
+        <a class="btn-default" href="{% url 'news:edit-contest' contest.id %}">edit<i class="fa fa-edit fa-lg"></i></a>
+    </div>
+    {% endfor %}
+    <h1>older</h1> {% for contest in older %}
+    <h4><a href="{{contest.url}}">{{contest.title}}</a></h4>
+    <p1>{{contest.description}}</p1>
+    <p1>{{contest.date}}</p1>
+    <p1>{{contest.time}}</p1>
+    <p1>{{contest.duration}}</p1>
+    <div class="">
+        <form action="{% url 'news:delete-contest' contest.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn-default mybtn">
+                <i class="fa fa-trash fa-lg">del</i>
+            </button>
+        </form>
+
+        <a class="btn-default" href="{% url 'news:edit-contest' contest.id %}">edit<i class="fa fa-edit fa-lg"></i></a>
+    </div>
+    {% endfor %}
+</body>
+
+</html>

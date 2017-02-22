@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>news</title>
+</head>
+<ul>
+    <li><a href="{% url 'news:news-page' %}">news</a></li>
+    <li><a href="{% url 'news:contest-page' %}">contest</a></li>
+    <li><a href="#">teams</a></li>
+</ul>
+
+<body>
+    <a href="{% url 'news:add-team' %}">new team</a>
+    <h1>Current Teams</h1> {% for team in all_teams %}
+    <div>
+        <h4>{{team.name}}</h4>
+        <p>
+            {{team.member1}}
+        </p>
+        <p>
+            {{team.member2}}
+        </p>
+        <p>
+            {{team.member3}}
+        </p>
+    </div>
+    <div class="">
+        <form action="{% url 'news:delete-team' team.id %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn-default mybtn">
+                <i class="fa fa-trash fa-lg">del</i>
+            </button>
+        </form>
+
+        <a class="btn-default" href="{% url 'news:edit-team' team.id %}">edit<i class="fa fa-edit fa-lg"></i></a>
+    </div>
+    {% endfor %}
+</body>
+
+</html>

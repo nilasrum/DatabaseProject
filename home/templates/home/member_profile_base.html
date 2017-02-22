@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACM Lab</title>
+    {% load staticfiles %}
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Federo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+    <!-- Load css styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/animate.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/profile.css' %}" />
+</head>
+
+<body>
+    <div class="left-navbar">
+        <ul class="">
+            {% block left-nav %} {% endblock %}
+        </ul>
+    </div>
+    {% block body %} {% endblock %}
+</body>
+
+</html>

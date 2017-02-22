@@ -1,31 +1,25 @@
-<!DOCTYPE html>
-<html>
+{% extends 'home/member_profile_base.html' %} {% block left-nav %}
+<div class="avatar">
+    <img src="http://i2.cdn.cnn.com/cnnnext/dam/assets/160825160953-05-week-in-photos-0826-super-169.jpg" />
+</div>
+<div class="username">
+    <h4>{{user.username}}</h4>
+</div>
+<li><a href="{% url 'home:member-profile-st' user.rid %}">Student info</a></li>
+<li><a href="# " class="active ">Online contest</a></li>
+<li><a href=" ">Sust contest</a></li>
+<li><a href="{% url 'home:index' %}">HOME</a></li>
+{% endblock %} {% block body %}
 
-<head>
-    <meta charset="utf-8">
-    <title>member profile</title>
-</head>
-
-<body>
-    <nav class="">
-        <ul id="nav" class="">
-            <li>
-                <a href="{% url 'home:member-profile-st' user.rid %}">Student info</a></li>
-            <li><a href="# " class="active ">Online contest</a></li>
-            <li><a href=" ">Sust contest</a></li>
-        </ul>
-    </nav>
-    <a href="{% url 'home:member-profile-update-oc' user.id %}">edit</a>
-    <ul>
-        <label>codeforces : </label>
-        <li>{{user.codeforces}}</li>
-        <label>topcode : </label>
-        <li>{{user.topcode}}</li>
-        <label>hackerrank : </label>
-        <li>{{user.hackerrank}}</li>
-        <label>uva : </label>
-        <li>{{user.uva}}</li>
-    </ul>
-</body>
-
-</html>
+<a href="{% url 'home:member-profile-update-oc' user.id %}">edit</a>
+<ul>
+    <label>codeforces : </label>
+    <li>{{user.codeforces}}</li>
+    <label>topcode : </label>
+    <li>{{user.topcode}}</li>
+    <label>hackerrank : </label>
+    <li>{{user.hackerrank}}</li>
+    <label>uva : </label>
+    <li>{{user.uva}}</li>
+</ul>
+{% endblock %}

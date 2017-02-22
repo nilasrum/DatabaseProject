@@ -3,7 +3,8 @@
     <div class="col-sm-offset-2 col-sm-10">
         <span class="text-danger small">{{ field.errors }}</span>
     </div>
-    <label class="pad vertical-sett control-label col-sm-4">{{ field.label_tag }}</label> {% if field|input_type == "ClearableFileInput" %}
+    <label class="pad vertical-sett control-label col-sm-4">{{ field.label_tag }}</label>
+    {% if field|input_type == "ClearableFileInput" %}
     <div class="form-div pad col-sm-8">
         <div class="hide">{{ field }}</div>
         <label for="id_image_url" class="input-label"><i class="fa fa-upload" aria-hidden="true"></i> <span id="label-span">Browse</span>
