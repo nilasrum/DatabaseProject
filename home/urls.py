@@ -29,6 +29,10 @@ urlpatterns = [
         views.UpdateProfileStView.as_view(), name='member-profile-update-st'),
     url(r'^member/(?P<pk>[0-9]+)/oc/update/$',
         views.UpdateProfileOcView.as_view(), name='member-profile-update-oc'),
+    url(r'^member/(?P<id>[0-9]+)/block/$',
+        views.block_user, name='block-account'),
+    url(r'^member/(?P<id>[0-9]+)/unblock/$',
+        views.unblock_user, name='unblock-account'),
 
     url(r'^add/halloffame/$', views.CreateHalloffame.as_view(), name='add-halloffame'),
     url(r'^halloffame/(?P<id>[0-9]+)/$',

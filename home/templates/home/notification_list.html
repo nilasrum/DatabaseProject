@@ -1,55 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACM Lab</title>
     {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'home/css/main.css' %}" />
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-<ul>
-    {% for req in new_req %}
-    <li>
-        <div class="col-md-6">
-            {{req.username}}
-            {{req.email}}
-            {{req.phone}}
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Federo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+    <!-- Load css styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/animate.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/notification.css' %}" />
+</head>
+
+<body>
+    <div class="left-navbar">
+        <ul class="">
+            <li><a href="{% url 'home:index' %}">Home</a></li>
+        </ul>
+    </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="row">
+        <div class="title">
+            <h3>New<span class="two-color"> Request</span></h3>
         </div>
-        <div class="col-md-6">
-            {{req.name}}
-            {{req.reg}}
-            {{req.session}}
+        <div class="border"></div>
+        {% if n_flag %}
+        <h4 class="text-center">No New request</h4>{% endif %} {% for req in new_req %}
+        <div class="col-md-12 border-2">
+            <div class="col-md-6 info-1">
+                <label>Name</label> : {{req.name}}<br/>
+                <label>Reg No.</label> : {{req.reg}}<br/>
+                <label>Session</label> : {{req.session}}<br/>
+                <label>Username</label> : {{req.username}}<br/>
+                <label>Email</label> : {{req.email}}<br/>
+                <label>Phone</label> : {{req.phone}}<br/>
+            </div>
+            <div class="col-md-6">
+                <a class="col-md-3" href="{% url 'home:account-activate' req.id %}">
+                    <div class="mybtn">approve</div>
+                </a>
+                <a class="col-md-3" href="{% url 'notification:del-notification' req.mark_id %}">
+                    <div class="mybtn-red">seen</div>
+                </a>
+            </div>
         </div>
-        <div>
-            <a href="{% url 'home:account-activate' req.id %}"><button>approve</button></a>
-            <a href="{% url 'notification:del-notification' req.mark_id %}"><button>mark as seen</button></a>
-        </div>
-    </li>
-    {% endfor %}
-    <div>
-        <button type="button" data-toggle="collapse" data-target=".req-collapse">older request</button>
+        {% endfor %}
     </div>
 
-        <div class="collapse req-collapse">
-            <ul>
-                {% for req in old_req %}
-    <li>
-        <div class="col-md-6">
-            {{req.username}}
-            {{req.email}}
-            {{req.phone}}
+    <div class="row">
+        <div class="title">
+            <h3>Older<span class="two-color"> Request</span></h3>
         </div>
-        <div class="col-md-6">
-            {{req.name}}
-            {{req.reg}}
-            {{req.session}}
+        <div class="border"></div>
+        {% if o_flag %}
+        <h4 class="text-center">No old request</h4>{% endif %} {% for req in old_req %}
+        <div class="col-md-12 border-2">
+            <div class="col-md-6 info-1">
+                <label>Name</label> : {{req.name}}<br/>
+                <label>Reg No.</label> : {{req.reg}}<br/>
+                <label>Session</label> : {{req.session}}<br/>
+                <label>Username</label> : {{req.username}}<br/>
+                <label>Email</label> : {{req.email}}<br/>
+                <label>Phone</label> : {{req.phone}}<br/>
+            </div>
+            <div class="col-md-6">
+                <a class="col-md-3" href="{% url 'home:account-activate' req.id %}">
+                    <div class="mybtn">approve</div>
+                </a>
+            </div>
         </div>
-        <div>
-            <a href="{% url 'home:account-activate' req.id %}"><button>approve</button></a>
-        </div>
-    </li>
-    {% endfor %}
-            </ul>
-        </div>
-    <a href="{% url 'home:index' %}"><h3>home</h3></a>
-</ul>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

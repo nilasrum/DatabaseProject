@@ -1,20 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>All member</title>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACM Lab</title>
+    {% load staticfiles %}
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Federo" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+    <!-- Load css styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/animate.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/member-list.css' %}" />
 </head>
 
 <body>
-    <h1>List of all members</h1>
-    <ul>
-        {% for member in all_member %}
-        <li>
-            <a href="{% url 'home:member-profile-st' member.id %}">{{member.username}}</a>
-        </li>
+    <div class="left-navbar">
+        <ul class="">
+            <li><a href="{% url 'home:index' %}">Home</a></li>
+        </ul>
+    </div>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
         {% endfor %}
     </ul>
+    {% endif %}
+    <div class="row">
+        <div class="title text-center">
+            <h2>Mem<span class="two-color">bers</span>
+          </h2>
+            <div class="border"></div>
+        </div>
+        <div class="row text-center">
+            <div class="top-nav">
+                <ul class="my-nav">
+                    <li><a rel="all-member" class="active">All</a></li>
+                    <li><a rel="current-student">Current</a></li>
+                    <li><a rel="ex-student">Ex-student</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--panel 1-->
+        <div class="container member-block active-class" id='all-member'>
+            {% for member in all_member %}
+            <div class="col-md-12 single-block">
+                <div class="col-md-6">
+                    <i class="fa fa-dot-circle-o bullet" aria-hidden="true">
+<a class="hover-effect" href="{% url 'home:member-profile-st' member.id %}">{{member.name}}</a></i>
+                </div>
+                <div class="col-md-6">
+                    {% if member.blocked %}
+                    <div class="mybtn"><a href="{% url 'home:unblock-account' member.id %}">Unblock</a></div>
+                    {% else %}
+                    <div class="mybtn-red"> <a href="{% url 'home:block-account' member.id %}">Block</a></div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!--panel 2-->
+        <div class="container member-block" id='current-student'>
+            {% for member in all_member %} {% if member.status %}
+            <div class="col-md-12 single-block">
+                <div class="col-md-6">
+                    <i class="fa fa-dot-circle-o bullet" aria-hidden="true">
+<a class="hover-effect" href="{% url 'home:member-profile-st' member.id %}">{{member.name}}</a></i>
+                </div>
+                <div class="col-md-6">
+                    {% if member.blocked %}
+                    <div class="mybtn"><a href="{% url 'home:unblock-account' member.id %}">Unblock</a></div>
+                    {% else %}
+                    <div class="mybtn-red"> <a href="{% url 'home:block-account' member.id %}">Block</a></div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %} {% endfor %}
+        </div>
+        <!--panel 3-->
+        <div class="container member-block" id='ex-student'>
+            {% for member in all_member %} {% if not member.status %}
+            <div class="col-md-12 single-block">
+                <div class="col-md-6">
+                    <i class="fa fa-dot-circle-o bullet" aria-hidden="true">
+<a class="hover-effect" href="{% url 'home:member-profile-st' member.id %}">{{member.name}}</a></i>
+                </div>
+                <div class="col-md-6">
+                    {% if member.blocked %}
+                    <div class="mybtn"><a href="{% url 'home:unblock-account' member.id %}">Unblock</a></div>
+                    {% else %}
+                    <div class="mybtn-red"> <a href="{% url 'home:block-account' member.id %}">Block</a></div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %} {% endfor %}
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://use.fontawesome.com/618e19295e.js"></script>
+    <script>
+        $(function() {
+            $('.top-nav .my-nav li a').on('click', function() {
+                $('.top-nav .my-nav li a.active').removeClass('active');
+                $(this).addClass('active');
+                var panelToShow = $(this).attr('rel');
+                $('.member-block.active-class').slideUp(300, function() {
+                    $(this).removeClass('active-class');
+                    $('#' + panelToShow).slideDown(300, function() {
+                        $(this).addClass('active-class');
+                    });
+
+                });
+            })
+        });
+    </script>
 </body>
 
 </html>

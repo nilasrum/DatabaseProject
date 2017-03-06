@@ -1,0 +1,150 @@
+body {
+    margin-left: 200px;
+    background-color: #303030;
+    color: gainsboro;
+}
+
+.title {
+    text-align: left;
+    padding-left: 30px;
+    padding-bottom: 10px;
+}
+
+.two-color {
+    color: #6CB670;
+}
+
+.info-1 {
+    padding-left: 50px;
+    padding-bottom: 10px;
+    text-align: justify;
+}
+
+.border {
+    border-top: 1px solid #fff;
+    height: 1px;
+    width: 35%;
+    padding-bottom: 18px;
+    margin-left: 30px;
+}
+
+.border-2 {
+    border-bottom: 1px solid #1e1e1e;
+    margin-bottom: 10px;
+}
+
+.left-navbar {
+    background: #232323;
+    width: 200px;
+    height: 100%;
+    display: block;
+    position: fixed;
+    border: 1px solid #1e1e1e;
+    left: 0px;
+    top: 0px;
+    z-index: 9999;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+ul li {
+    list-style: none;
+    text-decoration: none;
+}
+
+ul li a {
+    display: block;
+    width: 190px;
+    border-bottom: 2px solid #1e1e1e;
+    padding-top: 5px;
+    padding-left: 10px;
+    text-decoration: none;
+}
+
+.left-navbar a, .left-navbar a:hover {
+    color: #fff !important;
+    line-height: 40px;
+    display: inline-block;
+}
+
+ul li:hover {
+    background: #161616;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    transition: 0.3s linear;
+}
+
+.list-group {
+    padding: 20px;
+    text-align: justify;
+}
+
+.msg-success {
+    display: block;
+    font-weight: 400;
+    font-size: 13px;
+    padding: 10px 10px 10px 65px;
+    margin: 0 0 10px 0;
+    background: #dfd url(../images/icon-yes.svg) 40px 12px no-repeat;
+    background-size: 16px auto;
+    color: #333;
+    list-style-type: square;
+    line-height: 20px;
+}
+
+.msg-alert {
+    background: #ffc url(../images/icon-alert.svg) 40px 14px no-repeat;
+    background-size: 14px auto;
+    display: block;
+    font-weight: 400;
+    font-size: 13px;
+    padding: 10px 10px 10px 65px;
+    margin: 0 0 10px 0;
+    color: #333;
+    list-style-type: square;
+    line-height: 20px;
+}
+
+.msg-err {
+    background: #ff6666 url(../images/icon-alert.svg) 40px 14px no-repeat;
+    background-size: 14px auto;
+    display: block;
+    font-weight: 400;
+    font-size: 13px;
+    padding: 10px 10px 10px 65px;
+    margin: 0 0 10px 0;
+    color: #333;
+    list-style-type: square;
+    line-height: 20px;
+}
+
+.mybtn, .mybtn-red {
+    padding: 7px;
+    padding-left: 28px;
+    padding-right: 28px;
+    border: 1px solid #4e595f;
+    transition: 0.5s;
+    text-align: center;
+    color: gainsboro;
+}
+
+.mybtn:hover {
+    border: 1px solid #6cb670;
+    cursor: pointer;
+    background: #6cb670;
+}
+
+.mybtn-red:hover {
+    border: 1px solid #ff4d4d;
+    cursor: pointer;
+    background: #ff4d4d;
+}

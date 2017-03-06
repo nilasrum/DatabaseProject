@@ -23,6 +23,7 @@ from django.contrib import messages
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.decorators import login_required
+from django.contrib.sessions.models import Session
 from home.uva import *
 
 # self_defined useful functions
@@ -108,6 +109,11 @@ def login_form_view(request):
                 login(request, user)
                 return redirect('home:index')
 
+        if ActivationStatus.objects.get(user=user).status == False and Notification.objects.get(user=user).approved == True:
+            messages.error(request, 'User has been blocked by admin',
+                           extra_tags='msg-err')
+            return render(request, 'home/loginform.html')
+
         status = ActivationStatus.objects.get(
             user=user).status and user.check_password(password)
         if status is True:
@@ -152,6 +158,31 @@ def activate_account(request, id):
     messages.success(request, 'Account has been approved',
                      extra_tags='msg-success')
     return redirect('home:notification-list')
+
+
+#@user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err'))
+def block_user(request, id):
+    user = User.objects.get(id=id)
+    for s in Session.objects.all():
+        if s.get_decoded().get('_auth_user_id') == id:
+            s.delete()
+            user.is_active = False
+            user.save()
+    activation = ActivationStatus.objects.get(user=user)
+    activation.status = False
+    activation.save()
+    return redirect('home:member-list')
+
+
+@user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err'))
+def unblock_user(request, id):
+    user = User.objects.get(id=id)
+    activation = ActivationStatus.objects.get(user=user)
+    user.is_active = True
+    user.save()
+    activation.status = True
+    activation.save()
+    return redirect('home:member-list')
 
 # registration
 # ------------------------------------
@@ -207,6 +238,11 @@ def create_profile(sender, **kwargs):
 def notification_list(request):
     all_req = Notification.objects.filter(viewed=False, approved=False)
     old_req = Notification.objects.filter(viewed=True, approved=False)
+    nflag = oflag = False
+    if len(all_req) == 0:
+        nflag = True
+    if len(old_req) == 0:
+        oflag = True
 
     class FullProfile(object):
         pass
@@ -240,6 +276,8 @@ def notification_list(request):
     context = {
         'new_req': pro_list,
         'old_req': old_pro_list,
+        'n_flag': nflag,
+        'o_flag': oflag
     }
     return render(request, 'home/notification_list.html', context)
 
@@ -250,9 +288,22 @@ def notification_list(request):
 def member_list(request):
     all_users = User.objects.all()
     all_member = []
+
+    class FullMemberProfile(object):
+        pass
     for user in all_users:
-        if not user.is_superuser and ActivationStatus.objects.get(user=user).status:
-            all_member.append(user)
+        if not user.is_superuser and Notification.objects.get(user=user).approved:
+            x = FullMemberProfile()
+            x.id = user.id
+            x.status = StudentProfile.objects.get(user=user).status
+            x.propic = StudentProfile.objects.get(user=user).propic
+            x.name = StudentProfile.objects.get(user=user).name
+            if not ActivationStatus.objects.get(user=user).status:
+                x.blocked = True
+                print "blocked"
+            else:
+                x.blocked = False
+            all_member.append(x)
     return render(request, 'home/member_list.html', {'all_member': all_member})
 
 
@@ -323,7 +374,7 @@ class UpdateProfileStView(FormView):
             'image_url': profile.propic.url,
         })
         # print "---------------------------", form.image_url
-        #form = CustomForm(initial={'Email': GetEmailString()})
+        # form = CustomForm(initial={'Email': GetEmailString()})
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, id):

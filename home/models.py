@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 
 class StudentProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    propic = models.FileField()
+    propic = models.FileField(default='profile-icon.png')
     name = models.CharField(max_length=100)
     reg = models.CharField(max_length=12)
     session = models.CharField(max_length=20)
