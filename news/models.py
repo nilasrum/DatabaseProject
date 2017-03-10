@@ -7,7 +7,8 @@ import datetime
 
 def curr_time():
     now = str(datetime.datetime.now())
-    now = now[:16]
+    now = now[:19]
+    print now
     return now
 
 

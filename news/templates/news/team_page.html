@@ -1,42 +1,36 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title>news</title>
-</head>
+{% extends 'news/news_base.html' %} {% block style %} {% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'news/css/team_page.css' %}" /> {% endblock %}{% block left-nav %}
 <ul>
-    <li><a href="{% url 'news:news-page' %}">news</a></li>
-    <li><a href="{% url 'news:contest-page' %}">contest</a></li>
-    <li><a href="#">teams</a></li>
+    <li><a href="{% url 'news:news-page' %}"><i class="fa fa-newspaper-o" aria-hidden="true" style="padding-right:10px;"></i>news</a></li>
+    <li><a href="{% url 'news:contest-page' %}"><i class="fa fa-desktop"></i>contest</a></li>
+    <li><a href=""><i class="fa fa-users"></i>teams</a></li>
+    <li><a href="{% url 'home:index' %}"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
 </ul>
-
-<body>
-    <a href="{% url 'news:add-team' %}">new team</a>
-    <h1>Current Teams</h1> {% for team in all_teams %}
-    <div>
-        <h4>{{team.name}}</h4>
-        <p>
-            {{team.member1}}
-        </p>
-        <p>
-            {{team.member2}}
-        </p>
-        <p>
-            {{team.member3}}
-        </p>
+{% endblock %} {% block body %}
+<div class="post-block">
+    <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
+        <h2>tea<span class="two-color">ms</span> {% if user.is_superuser %}
+        <a href="{% url 'news:add-team' %}" class="edit-ico"><i class="fa fa-edit">new team</i></a> {% endif %}</h2>
+        <div class="border"></div>
     </div>
-    <div class="">
-        <form action="{% url 'news:delete-team' team.id %}" method="post" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn-default mybtn">
-                <i class="fa fa-trash fa-lg">del</i>
-            </button>
-        </form>
-
-        <a class="btn-default" href="{% url 'news:edit-team' team.id %}">edit<i class="fa fa-edit fa-lg"></i></a>
+    {% for team in all_teams %}
+    <div class="single-post">
+        <div class="from-info">
+            <h4>{{team.name}}</h4>
+            <h5>member 1 : {{team.member1}}</h5>
+            <h5>member 2 : {{team.member2}}</h5>
+            <h5>member 3 : {{team.member3}}</h5>
+        </div>
+        {% if user.is_superuser %}
+        <div class="option">
+            <form action="{% url 'news:delete-team' team.id %}" method="post">
+                {% csrf_token %}
+                <button class="mybtn-red" type="submit"><i class="fa fa-trash fa-lg"></i></button>
+            </form>
+            <a class="mybtn" href="{% url 'news:edit-team' team.id %}"><i class="fa fa-edit fa-lg"></i></a>
+        </div>
+        {% endif %}
     </div>
     {% endfor %}
-</body>
-
-</html>
+</div>
+{% endblock %}

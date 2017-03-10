@@ -1,0 +1,60 @@
+body {
+    margin-left: 200px;
+    background-color: #303030;
+    color: gainsboro;
+}
+
+.left-navbar {
+    background: #232323;
+    width: 200px;
+    height: 100%;
+    display: block;
+    position: fixed;
+    border: 1px solid #1e1e1e;
+    left: 0px;
+    top: 0px;
+    z-index: 9999;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+ul {
+    margin: 0px;
+    padding-top: 10px;
+    padding-left: 0px;
+}
+
+ul li {
+    list-style: none;
+    text-decoration: none;
+}
+
+ul li a {
+    display: block;
+    width: 190px;
+    border-bottom: 2px solid #1e1e1e;
+    padding-top: 5px;
+    padding-left: 10px;
+    text-decoration: none;
+}
+
+.left-navbar a, .left-navbar a:hover {
+    color: #fff !important;
+    line-height: 40px;
+    display: inline-block;
+}
+
+ul li:hover {
+    background: #161616;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    transition: 0.3s linear;
+}
+
+.fa {
+    padding: 10px;
+}

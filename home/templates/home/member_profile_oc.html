@@ -1,25 +1,56 @@
 {% extends 'home/member_profile_base.html' %} {% block left-nav %}
 <div class="avatar">
-    <img src="http://i2.cdn.cnn.com/cnnnext/dam/assets/160825160953-05-week-in-photos-0826-super-169.jpg" />
+    <a href="{% url 'home:member-profile-update-st' user.id %}"><img class="avatar-img" src="{{user.propic.url}}" /></a>
 </div>
 <div class="username">
     <h4>{{user.username}}</h4>
 </div>
-<li><a href="{% url 'home:member-profile-st' user.rid %}">Student info</a></li>
-<li><a href="# " class="active ">Online contest</a></li>
-<li><a href=" ">Sust contest</a></li>
-<li><a href="{% url 'home:index' %}">HOME</a></li>
+<li><a href="{% url 'home:member-profile-st' user.rid %}"><i class="fa fa-list-alt fa-pad" aria-hidden="true"></i>Student info</a></li>
+<li><a href="" class="active"><i class="fa fa-desktop fa-pad" aria-hidden="true"></i>Online contest</a></li>
+<li><a href=""><i class="fa fa-laptop fa-pad" aria-hidden="true"></i>Sust contest</a></li>
+<li><a href="{% url 'home:member-list' %}"><i class="fa fa-users fa-pad" aria-hidden="true"></i>members</a></li>
+<li><a href="{% url 'home:index' %}"><i class="fa fa-home fa-pad" aria-hidden="true"></i>home</a></li>
 {% endblock %} {% block body %}
+<div class="container topbottom">
 
-<a href="{% url 'home:member-profile-update-oc' user.id %}">edit</a>
-<ul>
-    <label>codeforces : </label>
-    <li>{{user.codeforces}}</li>
-    <label>topcode : </label>
-    <li>{{user.topcode}}</li>
-    <label>hackerrank : </label>
-    <li>{{user.hackerrank}}</li>
-    <label>uva : </label>
-    <li>{{user.uva}}</li>
-</ul>
+    {% if user.can_edit %}
+    <div class="edit-menu">
+        <a href="{% url 'home:member-profile-update-oc' user.id %}"><i class="fa fa-edit fa-lg e-btn">edit</i></a>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="title">
+            <h3>Uva<span class="two-color"> Oj</span></h3></div>
+        <div class="border"></div>
+        <div class="info-1 col-md-6">
+            <label>Username</label> : {{user.uva}}
+        </div>
+        <div class="info-1 col-md-6">
+            <h4>may be some graph or data</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="title">
+            <h3>Code<span class="two-color">forces</span></h3></div>
+        <div class="border"></div>
+        <div class="info-1 col-md-6">
+            <label>Handle</label> : {{user.codeforces}}
+        </div>
+        <div class="info-1 col-md-6">
+            <h4>may be some graph or data</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="title">
+            <h3>Top<span class="two-color">coder</span></h3></div>
+        <div class="border"></div>
+        <div class="info-1 col-md-6">
+            <label>Handle</label> : {{user.topcode}}
+        </div>
+        <div class="info-1 col-md-6">
+            <h4>may be some graph or data</h4>
+        </div>
+    </div>
+</div>
+</div>
 {% endblock %}

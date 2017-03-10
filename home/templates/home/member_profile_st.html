@@ -5,18 +5,19 @@
 <div class="username">
     <h4>{{user.username}}</h4>
 </div>
-<li><a href="" class="active">Student info</a></li>
-<li><a href="{% url 'home:member-profile-oc' user.id %}">Online contest</a></li>
-<li><a href="">Sust contest</a></li>
-<li><a href="{% url 'home:member-list' %}">members</a></li>
-<li><a href="{% url 'home:index' %}">home</a></li>
+<li><a href="" class="active"><i class="fa fa-list-alt fa-pad" aria-hidden="true"></i>Student info</a></li>
+<li><a href="{% url 'home:member-profile-oc' user.id %}"><i class="fa fa-desktop fa-pad" aria-hidden="true"></i>Online contest</a></li>
+<li><a href=""><i class="fa fa-laptop fa-pad" aria-hidden="true"></i>Sust contest</a></li>
+<li><a href="{% url 'home:member-list' %}"><i class="fa fa-users fa-pad" aria-hidden="true"></i>members</a></li>
+<li><a href="{% url 'home:index' %}"><i class="fa fa-home fa-pad" aria-hidden="true"></i>home</a></li>
 {% endblock %} {% block body %}
 <div class="container topbottom">
 
+    {% if user.can_edit %}
     <div class="edit-menu">
-        <a href="{% url 'home:member-profile-update-st' user.id %}">edit<i class="fa fa-edit fa-lg e-btn"></i></a>
+        <a href="{% url 'home:member-profile-update-st' user.id %}"><i class="fa fa-edit fa-lg e-btn">edit</i></a>
     </div>
-
+    {% endif %}
     <div class="row">
         <div class="title">
             <h3>Basic<span class="two-color"> Info</span></h3></div>

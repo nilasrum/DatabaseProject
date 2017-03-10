@@ -74,13 +74,13 @@ class RegistrationForm(CombinedFormBase):
 
 
 class ProfileFormSt(forms.Form):
-    name = forms.CharField()
-    reg = forms.CharField()
-    session = forms.CharField()
+    name = forms.CharField(required=True)
+    reg = forms.CharField(required=True)
+    session = forms.CharField(required=True)
     status = forms.BooleanField(required=False)
-    current_add = forms.CharField(required=False)
-    permanent_add = forms.CharField(required=False)
-    about = forms.CharField(required=False)
+    current_add = forms.CharField(widget=forms.Textarea, required=False)
+    permanent_add = forms.CharField(widget=forms.Textarea, required=False)
+    about = forms.CharField(widget=forms.Textarea, required=False)
     phone = forms.CharField(required=False)
     working = forms.CharField(required=False)
     image_url = forms.FileField(required=False)

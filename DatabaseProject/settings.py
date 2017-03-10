@@ -25,7 +25,9 @@ SECRET_KEY = '3d6p(b1c)jyvsgibats0e-dd$oaz&i!c6ahx@37)esjh#o9$8$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '*'
+]
 
 
 # Application definition
@@ -57,7 +59,7 @@ ROOT_URLCONF = 'DatabaseProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -102,7 +104,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
+STATICFILES_DIRS = (
+    os.path.abspath(BASE_DIR + '/static/'),
+)
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 

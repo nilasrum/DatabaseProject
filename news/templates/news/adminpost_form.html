@@ -15,7 +15,7 @@
     <div class="fluid-container">
         <div class="row">
             <div class="title text-center">
-                <h3>Update <span class="two-color">Event</span></h3>
+                <h3>New <span class="two-color">Post</span></h3>
                 <div class="border"></div>
             </div>
             <div class="container">
@@ -26,7 +26,7 @@
                     {% csrf_token %} {% include 'home/form-template.html' %}
                     <div class="form-group pad-dec">
                         <div class="text-center">
-                            <input type="submit" class="btn btn-transparent" value="update">
+                            <input type="submit" class="btn btn-transparent" value="POST">
                         </div>
                     </div>
                 </form>
@@ -34,18 +34,6 @@
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            'use strict';
-            $("#id_image_url").on("change", function(e) {
-                var files = $(this)[0].files;
-                if (files.length == 1) {
-                    var filename = e.target.value.split('\\').pop();
-                    $("#label-span").text(filename);
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

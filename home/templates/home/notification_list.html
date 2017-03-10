@@ -17,8 +17,8 @@
 
 <body>
     <div class="left-navbar">
-        <ul class="">
-            <li><a href="{% url 'home:index' %}">Home</a></li>
+        <ul>
+            <li><a href="{% url 'home:index' %}"><i class="fa fa-home" style="padding-right:10px;"></i>Home</a></li>
         </ul>
     </div>
     {% if messages %}
@@ -80,6 +80,7 @@
         </div>
         {% endfor %}
     </div>
+    <script src="https://use.fontawesome.com/618e19295e.js"></script>
 </body>
 
 </html>

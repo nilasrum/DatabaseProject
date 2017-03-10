@@ -1,0 +1,75 @@
+.about-form {
+    background: #2B2C30;
+    color: gainsboro;
+    align-content: center;
+    border: 1px solid gainsboro transparent;
+}
+
+.pad {
+    margin-bottom: 10px;
+}
+
+.pad-dec {
+    margin-top: -50px;
+}
+
+.vertical-sett {
+    text-align: right;
+}
+
+textarea {
+    width: 600px;
+    outline: none !important;
+    border-color: #4e595f;
+    box-shadow: 1px 1px 1px #fff;
+    background: transparent;
+}
+
+input[type=text] {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid gainsboro;
+    width: 300px;
+}
+
+input[type=text]:focus {
+    border-bottom: 1px solid #6CB670;
+}
+
+input[type=text]:hover {
+    border-bottom: 1px solid #6CB670;
+}
+
+.pad a {
+    display: none;
+}
+
+
+/*button*/
+
+.b-btn{
+    width:200px;
+}
+
+#id_image_url {
+    display: none;
+}
+
+.input-label {
+    background: transparent;
+    padding: 7px;
+    padding-left: 28px;
+    padding-right: 28px;
+    border: 1px solid #4e595f;
+    transition: 0.5s;
+}
+
+.input-label:hover {
+    border: 1px solid #6cb670;
+    cursor: pointer;
+    background: #6cb670;
+}
+
+.fa {
+    margin-right: 7px;
+}

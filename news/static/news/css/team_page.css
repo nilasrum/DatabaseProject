@@ -1,0 +1,89 @@
+.two-color {
+    color: #6CB670;
+}
+
+.title {
+    padding-bottom: 30px;
+}
+
+.title h2 {
+    font-family: 'Federo', sans-serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 38px;
+    color: #fff;
+}
+
+.border {
+    border-top: 1px solid #fff;
+    height: 1px;
+    margin: 15px auto 0;
+    position: relative;
+    width: 35%;
+    padding-bottom: 15px;
+}
+
+.border:before {
+    background-color: #6CB670;
+    border: 1px ridge #fff;
+    content: "";
+    height: 10px;
+    left: 50%;
+    margin-left: -20px;
+    position: absolute;
+    top: -5px;
+    width: 40px;
+}
+
+.edit-ico i {
+    text-decoration: none;
+    font-size: 14px;
+    color: white;
+    opacity: .7;
+}
+
+.edit-ico i:hover {
+    color: white;
+    opacity: 1;
+}
+
+.post-block {}
+
+.single-post {
+    width: 80%;
+    border: 1px solid #1e1e1e;
+    display: block;
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.mybtn, .mybtn-red {
+    background-color: transparent;
+    border: none;
+    color: gainsboro;
+    padding-right: 10px;
+}
+
+.option {
+    position: absolute;
+    right: 0;
+    padding-right: 100px;
+    margin-top: -80px;
+}
+
+.mybtn :hover {
+    color: yellow;
+}
+
+.mybtn-red:hover {
+    color: red;
+}
+
+.from-info h4 {
+    color: #1dcaff;
+}
+
+.from-info h6 {
+    color: grey;
+}

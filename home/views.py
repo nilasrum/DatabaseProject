@@ -160,7 +160,7 @@ def activate_account(request, id):
     return redirect('home:notification-list')
 
 
-#@user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err'))
+@user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err'))
 def block_user(request, id):
     user = User.objects.get(id=id)
     for s in Session.objects.all():
@@ -330,7 +330,9 @@ def member_profile_view_st(request, id):
     x.about = Bio.objects.get(user=user).about
     x.working = Bio.objects.get(user=user).working
     x.phone = Bio.objects.get(user=user).phone
-
+    x.can_edit = False
+    if request.user.id == user.id:
+        x.can_edit = True
     return render(request, 'home/member_profile_st.html', {'user': x})
 
 
@@ -344,12 +346,16 @@ def member_profile_view_oc(request, id):
         pass
     x = FullMemberProfile()
     x.id = OnlineContestProfile.objects.get(user=user).id
+    x.propic = StudentProfile.objects.get(user=user).propic
     x.rid = id
     x.name = StudentProfile.objects.get(user=user).name
     x.codeforces = OnlineContestProfile.objects.get(user=user).codeforces
     x.topcode = OnlineContestProfile.objects.get(user=user).topcode
     x.uva = OnlineContestProfile.objects.get(user=user).uva
     x.hackerrank = OnlineContestProfile.objects.get(user=user).hackerrank
+    x.can_edit = False
+    if request.user.id == user.id:
+        x.can_edit = True
     return render(request, 'home/member_profile_oc.html', {'user': x})
 
 

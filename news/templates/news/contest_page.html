@@ -1,53 +1,62 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <title>news</title>
-</head>
+{% extends 'news/news_base.html' %} {% block style %} {% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'news/css/news_page.css' %}" /> {% endblock %}{% block left-nav %}
 <ul>
-    <li><a href="{% url 'news:news-page' %}">news</a></li>
-    <li><a href="#">contest</a></li>
-    <li><a href="{% url 'news:teams-page' %}">teams</a></li>
+    <li><a href="{% url 'news:news-page' %}"><i class="fa fa-newspaper-o" aria-hidden="true" style="padding-right:10px;"></i>news</a></li>
+    <li><a href=""><i class="fa fa-desktop"></i>contest</a></li>
+    <li><a href="{% url 'news:teams-page' %}"><i class="fa fa-users"></i>teams</a></li>
+    <li><a href="{% url 'home:index' %}"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
 </ul>
-
-<body>
-    <a href="{% url 'news:add-contest' %}">new contest</a>
-    <h1>most recent</h1> {% for contest in recent %}
-    <h4><a href="{{contest.url}}">{{contest.title}}</a></h4>
-    <p1>{{contest.description}}</p1>
-    <p1>{{contest.date}}</p1>
-    <p1>{{contest.time}}</p1>
-    <p1>{{contest.duration}}</p1>
-    <div class="">
-        <form action="{% url 'news:delete-contest' contest.id %}" method="post" style="display: inline;">
-            {% csrf_token %}
-            <input type="hidden" name="" value="{{ upc.id }}" />
-            <button type="submit" class="btn-default mybtn">
-                <i class="fa fa-trash fa-lg">del</i>
-            </button>
-        </form>
-
-        <a class="btn-default" href="{% url 'news:edit-contest' contest.id %}">edit<i class="fa fa-edit fa-lg"></i></a>
+{% endblock %} {% block body %}
+<div class="post-block">
+    <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
+        <h2>Re<span class="two-color">cent</span> {% if user.is_superuser %}
+        <a href="{% url 'news:add-contest' %}" class="edit-ico"><i class="fa fa-edit">new contest</i></a> {% endif %}</h2>
+        <div class="border"></div>
+    </div>
+    {% for contest in recent %}
+    <div class="single-post">
+        <div class="from-info">
+            <h4><a href="{{contest.url}}">{{contest.title}}</a></h4>
+            <h5>{{contest.description}}</h5>
+            <h5>Date : {{contest.date}}</h5>
+            <h5>Time : {{contest.time}}</h5>
+            <h5>Duration: {{contest.duration}}</h5>
+        </div>
+        {% if user.is_superuser %}
+        <div class="option">
+            <form action="{% url 'news:delete-contest' contest.id %}" method="post">
+                {% csrf_token %}
+                <button class="mybtn-red" type="submit"><i class="fa fa-trash fa-lg"></i></button>
+            </form>
+            <a class="mybtn" href="{% url 'news:edit-contest' contest.id %}"><i class="fa fa-edit fa-lg"></i></a>
+        </div>
+        {% endif %}
     </div>
     {% endfor %}
-    <h1>older</h1> {% for contest in older %}
-    <h4><a href="{{contest.url}}">{{contest.title}}</a></h4>
-    <p1>{{contest.description}}</p1>
-    <p1>{{contest.date}}</p1>
-    <p1>{{contest.time}}</p1>
-    <p1>{{contest.duration}}</p1>
-    <div class="">
-        <form action="{% url 'news:delete-contest' contest.id %}" method="post" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn-default mybtn">
-                <i class="fa fa-trash fa-lg">del</i>
-            </button>
-        </form>
-
-        <a class="btn-default" href="{% url 'news:edit-contest' contest.id %}">edit<i class="fa fa-edit fa-lg"></i></a>
+</div>
+<div class="post-block">
+    <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
+        <h2>Ol<span class="two-color">der</span>
+        <div class="border"></div>
+    </div>
+    {% for contest in older %}
+    <div class="single-post">
+        <div class="from-info">
+          <h4><a href="{{contest.url}}">{{contest.title}}</a></h4>
+          <h5>{{contest.description}}</h5>
+          <h5>Date : {{contest.date}}</h5>
+          <h5>Time : {{contest.time}}</h5>
+          <h5>Duration: {{contest.duration}}</h5>
+        </div>
+        {% if user.is_superuser %}
+        <div class="option">
+            <form action="{% url 'news:delete-contest' contest.id %}" method="post">
+                {% csrf_token %}
+                <button class="mybtn-red" type="submit"><i class="fa fa-trash fa-lg"></i></button>
+            </form>
+            <a class="mybtn" href="{% url 'news:edit-contest' contest.id %}"><i class="fa fa-edit fa-lg"></i></a>
+        </div>
+        {% endif %}
     </div>
     {% endfor %}
-</body>
-
-</html>
+</div>{% endblock %}

@@ -17,8 +17,8 @@
 
 <body>
     <div class="left-navbar">
-        <ul class="">
-            <li><a href="{% url 'home:index' %}">Home</a></li>
+        <ul>
+            <li><a href="{% url 'home:index' %}"><i class="fa fa-home" style="padding-right:10px;"></i>Home</a></li>
         </ul>
     </div>
     {% if messages %}
@@ -51,6 +51,7 @@
                     <i class="fa fa-dot-circle-o bullet" aria-hidden="true">
 <a class="hover-effect" href="{% url 'home:member-profile-st' member.id %}">{{member.name}}</a></i>
                 </div>
+                {% if user.is_superuser %}
                 <div class="col-md-6">
                     {% if member.blocked %}
                     <div class="mybtn"><a href="{% url 'home:unblock-account' member.id %}">Unblock</a></div>
@@ -58,6 +59,7 @@
                     <div class="mybtn-red"> <a href="{% url 'home:block-account' member.id %}">Block</a></div>
                     {% endif %}
                 </div>
+                {% endif %}
             </div>
             {% endfor %}
         </div>
@@ -69,6 +71,7 @@
                     <i class="fa fa-dot-circle-o bullet" aria-hidden="true">
 <a class="hover-effect" href="{% url 'home:member-profile-st' member.id %}">{{member.name}}</a></i>
                 </div>
+                {% if user.is_superuser %}
                 <div class="col-md-6">
                     {% if member.blocked %}
                     <div class="mybtn"><a href="{% url 'home:unblock-account' member.id %}">Unblock</a></div>
@@ -76,6 +79,7 @@
                     <div class="mybtn-red"> <a href="{% url 'home:block-account' member.id %}">Block</a></div>
                     {% endif %}
                 </div>
+                {% endif %}
             </div>
             {% endif %} {% endfor %}
         </div>
@@ -87,6 +91,7 @@
                     <i class="fa fa-dot-circle-o bullet" aria-hidden="true">
 <a class="hover-effect" href="{% url 'home:member-profile-st' member.id %}">{{member.name}}</a></i>
                 </div>
+                {% if user.is_superuser %}
                 <div class="col-md-6">
                     {% if member.blocked %}
                     <div class="mybtn"><a href="{% url 'home:unblock-account' member.id %}">Unblock</a></div>
@@ -94,6 +99,7 @@
                     <div class="mybtn-red"> <a href="{% url 'home:block-account' member.id %}">Block</a></div>
                     {% endif %}
                 </div>
+                {% endif %}
             </div>
             {% endif %} {% endfor %}
         </div>

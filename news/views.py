@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 from .models import AdminPost, Contest, Teams
+import datetime
 
 # Create your views here.
 
@@ -46,6 +47,9 @@ def news_page(request):
 @cbv_decorator(user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err')))
 class CreateAdminPost(CreateView):
     model = AdminPost
+    now = str(datetime.datetime.now())
+    now = now[:19]
+    model.date = now
     fields = ['post']
 
 
@@ -73,7 +77,7 @@ def contest_page(request):
     for c in all_contest[:5]:
         recent.append(c)
     for c in all_contest[5:]:
-        older.append(news)
+        older.append(c)
     context = {
         'older': older,
         'recent': recent,
