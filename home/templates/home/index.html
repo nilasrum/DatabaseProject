@@ -161,7 +161,8 @@
                         <div class="border"></div>
                     </div>
                     <div class="quote-tag">
-                        <i class="fa fa-quote-left"></i><span class="hall-quote"> ...standing in the hall of fame and the worlds gonna know your name... </span><i class="fa fa-quote-right"></i></div>
+                        <i class="fa fa-quote-left"></i><span class="hall-quote"> ...standing in the hall of fame and the worlds gonna know your name... </span><i class="fa fa-quote-right"></i>
+                    </div>
                     <div class="carousel">
                         <!-- BEGIN CAROUSEL -->
                         <div class="slides">
@@ -319,7 +320,7 @@
                     <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
                         <h2>Photo <span class="two-color">Gallery</span>
                             {% if user.is_superuser %}
-                            <a href="" class="edit-ico"><i class="fa fa-edit">edit</i></a>
+                            <a href="{% url 'home:add-gallery' %}" class="edit-ico"><i class="fa fa-edit">edit</i></a>
                             {% endif %}
                         </h2>
                         <div class="border"></div>
@@ -328,7 +329,6 @@
                         <div class="photo-window">
                             {% for gal in all_gallery %}
                             <div class="col-md-4 full-box">
-                                <!--<a href="{{gal.image_url.url}}" data-lightbox="gallery" data-title="{{gal.title}}"><img src="{{gal.image_url.url}}" alt="image-1"></a>-->
                                 <div class="grid">
                                     <figure class="effect-layla">
                                         <img src="{{gal.image_url.url}}" alt="img04" />
@@ -338,6 +338,13 @@
                                         </figcaption>
                                     </figure>
                                 </div>
+                                {% if user.is_superuser %}
+                                <form action="{% url 'home:delete-photo' gal.id %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-default mybtn">
+                                        <i class="fa fa-trash fa-lg"></i>
+                                    </button>
+                                </form> {% endif %}
                             </div>
                             {% endfor %}
                         </div>
@@ -452,8 +459,12 @@
     </div>
     <!--script-->
     {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'home/js/jquery.js' %}"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <!--<script type="text/javascript" src="{% static 'home/js/jquery.mousewheel.min.js' %}"></script>-->
     <script type="text/javascript" src="{% static 'home/js/jquery.carousel-1.1.js' %}"></script>
     <script type="text/javascript" src="{% static 'home/js/backtotop.js' %}"></script>

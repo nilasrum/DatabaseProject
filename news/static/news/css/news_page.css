@@ -87,3 +87,15 @@
 .from-info h6 {
     color: grey;
 }
+
+.modal-title {
+    font-size: 28px;
+    color: #fff;
+    text-align: center;
+}
+
+.modal-content {
+    color: gainsboro;
+    border-radius: 0;
+    background-color: #333439;
+}

@@ -352,6 +352,8 @@ def member_profile_view_oc(request, id):
     x.codeforces = OnlineContestProfile.objects.get(user=user).codeforces
     x.topcode = OnlineContestProfile.objects.get(user=user).topcode
     x.uva = OnlineContestProfile.objects.get(user=user).uva
+    if len(x.uva)>0:
+        x.uvadetails = getUvaInfo(x.uva)
     x.hackerrank = OnlineContestProfile.objects.get(user=user).hackerrank
     x.can_edit = False
     if request.user.id == user.id:
@@ -486,4 +488,17 @@ class UpdateHalloffame(UpdateView):
 @cbv_decorator(user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err')))
 class DeleteHalloffame(DeleteView):
     model = HallOfFame
+    success_url = reverse_lazy('home:index')
+
+# Gallery
+# ---------------------
+
+@cbv_decorator(user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err')))
+class GalleryPhotos(CreateView):
+    model = Gallery
+    fields = ['title','image_url']
+
+@cbv_decorator(user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err')))
+class DeletePhotos(DeleteView):
+    model = Gallery
     success_url = reverse_lazy('home:index')

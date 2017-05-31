@@ -1,4 +1,4 @@
-{% extends 'news/news_base.html' %} {% block style %} {% load staticfiles %}
+{% extends 'news/news_base.html' %} {% block style %} {% load staticfiles %}{% load fiter_tag_home %}
 <link rel="stylesheet" type="text/css" href="{% static 'news/css/news_page.css' %}" /> {% endblock %}{% block left-nav %}
 <ul>
     <li><a href=""><i class="fa fa-newspaper-o" aria-hidden="true" style="padding-right:10px;"></i>news</a></li>
@@ -20,8 +20,27 @@
             <h6>{{news.date}}</h6>
         </div>
         <div class="msg-post">
-            {{news.post}}
+            <p>{{ news.post|str_cut }}
+                <br/><a class="more" href="#" data-toggle="modal" data-target="#{{news.id}}">Read more</a>
+            </p>
         </div>
+        <!-- Modal-->
+        <div class="modal fade" id="{{news.id}}" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">{{user.username}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{news.post}}</p>
+                    </div>
+                </div>
+                <!-- //Modal content-->
+            </div>
+        </div>
+        <!-- //Modal-->
         {% if user.is_superuser %}
         <div class="option">
             <form action="{% url 'news:delete-admin-post' news.id %}" method="post">

@@ -112,6 +112,9 @@ class Gallery(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('home:index')
+
 
 class HallOfFame(models.Model):
     teamname = models.CharField(max_length=100)

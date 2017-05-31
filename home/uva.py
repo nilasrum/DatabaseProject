@@ -1,39 +1,33 @@
 import json
 import urllib
-from .models import UvaProblems
 
 
-def title_match(title):
-    titles = ['Divide and Conquer', 'Dynamic Programming', 'String Processing with Dynamic Programming',
-              'Network Flow', 'Game Theory', 'Graph Traversal', 'Single-Source Shortest Paths (SSSP)', 'Problem Decomposition',
-              'Introduction', 'Mathematics', '(Computational) Geometry', 'Combinatorics', 'Probability Theory', 'Number Theory']
-    if title in titles:
-        return True
-    return False
-
-
-def RefreshProblem():
-    # all problems with catagory
-    url = "http://uhunt.felix-halim.net/api/cpbook/3"
+def getUvaInfo(username):
+    url = "http://uhunt.felix-halim.net/api/uname2uid/"+username
     result = json.load(urllib.urlopen(url))
-
-    for r in result:
-        fm = 0
-        mtitle = r["title"]
-        if title_match(mtitle):
-            fm = 1
-        for rr in r["arr"]:
-            fs = 0
-            stitle = rr["title"]
-            if title_match(stitle):
-                fs = 1
-        if fm == 1 or fs == 1:
-            for rrr in rr["arr"]:
-                for rrrr in rrr:
-                    if fm == 1:
-                        if rrrr < 0:
-                            rrrr *= -1
-                        p_url = "http://uhunt.felix-halim.net/api/p/num/" + \
-                            str(rrrr)
-                        problem = json.load(urllib.urlopen(p_url))
-                        print problem
+    url  = "http://uhunt.felix-halim.net/api/ranklist/"+str(result)+"/0/0"
+    info  = json.load(urllib.urlopen(url))
+    class UvaInfo(object):
+        pass
+    x = UvaInfo()
+    x.name = info[0]["name"]
+    x.rank = info[0]["rank"]
+    x.nos = info[0]["nos"]
+    x.ac = info[0]["ac"]
+    if info[0]["activity"][0]>0:
+        x.last = "last solved less than 2 days ago"
+    elif info[0]["activity"][1]>0:
+        x.last = "last solved less than 7 days ago"
+    elif info[0]["activity"][2]>0:
+        x.last = "last solved less than 1 month ago"
+    elif info[0]["activity"][3]>0:
+        x.last = "last solved less than 3 month ago"
+    elif info[0]["activity"][4]>0:
+        x.last = "last solved less than 1 year ago"
+    else :
+        x.last = "last solved more than 1 year ago"
+    url = "http://uhunt.felix-halim.net/api/p"
+    result = json.load(urllib.urlopen(url))
+    a = dict(str(result[0][0])=result[0][2])
+    print "-----------------------------"
+    return x

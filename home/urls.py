@@ -42,6 +42,10 @@ urlpatterns = [
     url(r'^halloffame/(?P<pk>[0-9]+)/delete/$',
         views.DeleteHalloffame.as_view(), name='delete-halloffame'),
 
+    url(r'^add/gallery/$', views.GalleryPhotos.as_view(), name='add-gallery'),
+    url(r'^gallery/(?P<pk>[0-9]+)/delete/$',
+        views.DeletePhotos.as_view(), name='delete-photo'),
+
     url(r'^about/(?P<pk>[0-9]+)/edit/$',
         views.UpdateAbout.as_view(), name='edit-about'),
     url(r'^adminerr/$', views.admin_error, name='admin-err'),
