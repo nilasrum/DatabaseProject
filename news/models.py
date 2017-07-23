@@ -15,6 +15,7 @@ def curr_time():
 class AdminPost(models.Model):
     date = models.CharField(max_length=100, default=curr_time())
     post = models.TextField(max_length=1000)
+    title = models.CharField(max_length=200,default="")
 
     def get_absolute_url(self):
         return reverse('news:news-page')

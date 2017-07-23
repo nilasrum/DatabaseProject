@@ -84,3 +84,12 @@ class ProfileFormSt(forms.Form):
     phone = forms.CharField(required=False)
     working = forms.CharField(required=False)
     image_url = forms.FileField(required=False)
+
+class ContactForm(forms.Form):
+    contact_name = forms.CharField(required=True)
+    contact_email = forms.EmailField(required=True)
+    contact_sub = forms.CharField(required=False)
+    content = forms.CharField(
+        required=True,
+        widget=forms.Textarea
+    )

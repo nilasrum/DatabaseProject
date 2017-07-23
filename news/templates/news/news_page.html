@@ -16,7 +16,7 @@
     {% for news in recent %}
     <div class="single-post">
         <div class="from-info">
-            <h4>{{user.username}}</h4>
+            <h4>{{news.title}}</h4>
             <h6>{{news.date}}</h6>
         </div>
         <div class="msg-post">
@@ -31,7 +31,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">{{user.username}}</h4>
+                        <h4 class="modal-title">{{news.title}}</h4>
                     </div>
                     <div class="modal-body">
                         <p>{{news.post}}</p>
@@ -61,7 +61,7 @@
     {% for news in older %}
     <div class="single-post">
         <div class="from-info">
-            <h4>{{user.username}}</h4>
+            <h4>{{news.title}}</h4>
             <h6>{{news.date}}</h6>
         </div>
         <div class="msg-post">

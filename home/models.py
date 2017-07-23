@@ -75,7 +75,7 @@ class ActivationStatus(models.Model):
 
 
 class About(models.Model):
-    image_url = models.FileField()
+    image_url = models.FileField(default=None)
     description = models.TextField(max_length=2000)
 
     def get_absolute_url(self):
@@ -83,10 +83,7 @@ class About(models.Model):
 
 
 class Recent(models.Model):
-    title = models.CharField(max_length=500)
-    date = models.CharField(max_length=30)
-    description = models.TextField(max_length=2000)
-    image_url = models.FileField()
+    news = models.TextField(max_length=2000)
 
     def __str__(self):
         return self.title
@@ -122,10 +119,6 @@ class HallOfFame(models.Model):
     member2 = models.CharField(max_length=100)
     member3 = models.CharField(max_length=100)
     coach = models.CharField(max_length=100)
-    participated = models.IntegerField()
-    top10 = models.IntegerField()
-    top5 = models.IntegerField()
-    champion = models.IntegerField()
     description = models.TextField(max_length=2000)
     image_url = models.FileField()
 

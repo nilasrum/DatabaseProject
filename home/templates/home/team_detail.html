@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Details</title>
+    <title>ACM lab,SUST</title>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/jqbar.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/bootstrap.min.css' %}" />
@@ -15,7 +15,7 @@
 </head>
 
 <body>
-
+  <div class="backhome"><a href = "{% url 'home:index' %}"><i class="fa fa-home fa-3x"></i></a></div>
     <div class="container topbottom">
         {% if user.is_superuser %}
         <div class="edit-menu">
@@ -59,31 +59,10 @@
                     <div class="person">
                         <span class="name">{{team.teamname}}</span>
                     </div>
-                    <div class="bars">
-                        <div id="bar-1"></div>
-                        <br/>
-                        <div id="bar-2"></div>
-                        <br/>
-                        <div id="bar-3"></div>
-                        <br/>
-                        <div id="bar-4"></div>
-                        <br/>
-
-                    </div>
-                    <div class="bar-desc">
-                        <div id="bars-content">
-                            <div class="content" id="content-1">HTML5 is a markup language used for structuring and presenting content for the World Wide Web and a core technology of the Int5 is a markup language used for structuring and presenting content for the World Wide Web and a core technoagnet.</div>
-                            <div class="content" id="content-2">CSS is a style sheet language used for describing the presentation semantics of a document written in a markup language.</div>
-                            <div class="content" id="content-3">As part of web browsers, implementations allow client-side scripts to interact with the user and control the browser.</div>
-                            <div class="content" id="content-4">WordPress is an open source blogging tool and a CMS based on PHP and MySQL, which runs on a web hosting service.</div>
-                        </div>
+                    <div class="desciption home">
+                      <p>{{team.description}}</p>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="desciption home">
-                <p>{{team.description}}</p>
             </div>
         </div>
     </div>

@@ -1,5 +1,7 @@
 /*navigation panel */
-
+p{
+  font-size: 13px;
+}
 #trans-nav.shrink {
     transition: all ease 3s;
     background: transparent;
@@ -735,6 +737,7 @@ a.back-to-top:hover {
     color: #222;
     margin-left: 10px;
     margin-right: 10px;
+    margin-top: 10px;
 }
 
 img {

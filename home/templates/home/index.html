@@ -14,13 +14,20 @@
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/animate.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/lightbox.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/carousel.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/login-full.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/login.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/galley-effect.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'home/css/main.css' %}" />
 </head>
 
 <body>
-    <a href="#" class="back-to-top"> back-to-top </a>
+  {% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+  {% endif %}
     <header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -107,9 +114,9 @@
                     <h2 class="title-1"><em><span>A</span>cm Lab</em></h2>
                     <h3>Shahjalal University of Science and Technology</h3>
                     <div>
-                        <i class="fun fa fa-code fa-2x wow slideInLeft"></i>
-                        <i class="fun fa fa-coffee fa-3x wow slideInUp"></i>
-                        <i class="fun fa fa-code fa-2x wow slideInRight"></i>
+                        <i class="fun fa fa-code fa-4x wow slideInLeft"></i>
+                        <i class="fun fa fa-coffee fa-5x wow slideInUp"></i>
+                        <i class="fun fa fa-code fa-4x wow slideInRight"></i>
                     </div>
                 </div>
             </div>
@@ -257,51 +264,6 @@
     </section>
     <!--upcoming section end -->
     <!-- recent section startt-->
-    <section id="recent">
-        <div class="recent-section">
-            <div class="container">
-                <div class="row">
-                    <div class="title text-center wow fadeIn" data-wow-duration="1500ms">
-                        <h2>Recent <span class="two-color">Event</span>
-                            {% if user.is_superuser %}
-                            <a href="" class="edit-ico"><i class="fa fa-edit">edit</i></a>
-                            {% endif %}
-                        </h2>
-                        <div class="border"></div>
-                    </div>
-                    <div class="image-carousel">
-                        <div class="inner">
-                            {% for rec in all_recent %}
-                            <div class="recent wow fadeInUp">
-                                <div class="container">
-                                    <div class="col-md-5">
-                                        <div class="recent-media">
-                                            <img src="{% static 'home/images/' %}{{rec.image_url}}" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="recent-desc">
-                                            <div class="recent-title">
-                                                <h3>{{rec.title}}</h3>
-                                            </div>
-                                            <div class="recent-info">
-                                                <div><span>Date</span>{{rec.date}}</div>
-                                                <div><span>Place</span>IICT,SUST</div>
-                                            </div>
-                                            <p>{{rec.description}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <div class="prev"></div>
-                        <div class="next"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
     <!-- recent section end-->
     <section class="divider parallax-section">
         <div class="container">
@@ -392,58 +354,49 @@
                 </div>
                 <div class="contact-info col-md-6 wow fadeInUp" data-wow-duration="500ms">
                     <h3>Contact Details</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, vero, provident, eum eligendi blanditiis ex explicabo vitae nostrum facilis asperiores dolorem illo officiis ratione vel fugiat dicta laboriosam labore adipisci.</p>
+                    <p>For any query just leave a message. Your message will be sent to the admin. Use your valid email,the admin will contact you in the provided email.</p>
                     <div class="contact-details">
                         <div class="con-info clearfix">
                             <i class="fa fa-home fa-lg"></i>
-                            <span>SUST, Sylhet, Bangladesh</span>
+                            <span><p>SUST, Sylhet, Bangladesh</p></span>
                         </div>
 
                         <div class="con-info clearfix">
                             <i class="fa fa-phone fa-lg"></i>
-                            <span>Phone: +880-31-000-000</span>
+                            <span><p>Phone: +880-31-000-000</p></span>
                         </div>
 
                         <div class="con-info clearfix">
                             <i class="fa fa-fax fa-lg"></i>
-                            <span>Fax: +880-31-000-000</span>
+                            <span><p>Fax: +880-31-000-000</p></span>
                         </div>
 
                         <div class="con-info clearfix">
                             <i class="fa fa-envelope fa-lg"></i>
-                            <span>Email: acmlab@sust.edu.com</span>
+                            <span><p>Email: acmlab@sust.edu</p></span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Contact Form -->
                 <div class="contact-form col-md-6 wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
-                    <form id="contact-form" method="post" action="sendmail.php" role="form">
-
+                    <form id="contact-form" method="post" action="{% url 'home:sendmail' %}" role="form">
+{% csrf_token %}
                         <div class="form-group">
-                            <input type="text" placeholder="Your Name" class="form-control" name="name" id="name">
-                        </div>
-
-                        <div class="form-group">
-                            <input type="email" placeholder="Your Email" class="form-control" name="email" id="email">
+                            <input type="text" placeholder="Your Name" class="form-control" name="contact_name" id="contact_name">
                         </div>
 
                         <div class="form-group">
-                            <input type="text" placeholder="Subject" class="form-control" name="subject" id="subject">
+                            <input type="email" placeholder="Your Email" class="form-control" name="contact_email" id="contact_email">
                         </div>
 
                         <div class="form-group">
-                            <textarea rows="6" placeholder="Message" class="form-control" name="message" id="message"></textarea>
+                            <input type="text" placeholder="Subject" class="form-control" name="contact_sub" id="contact_sub">
                         </div>
 
-                        <div id="mail-success" class="success">
-                            Thank you. The Mailman is on His Way :)
+                        <div class="form-group">
+                            <textarea rows="6" placeholder="Message" class="form-control" name="content" id="content"></textarea>
                         </div>
-
-                        <div id="mail-fail" class="error">
-                            Sorry, don't know what happened. Try later :(
-                        </div>
-
                         <div id="cf-submit">
                             <input type="submit" id="contact-submit" class="btn btn-transparent" value="Submit">
                         </div>
@@ -459,15 +412,14 @@
     </div>
     <!--script-->
     {% load staticfiles %}
-    <script type="text/javascript" src="{% static 'home/js/jquery.js' %}"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script type="text/javascript" src="{% static 'home/js/jquery.js' %}"></script>-->
+    <script type="text/javascript" src="{% static 'home/js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/js/bootstrap.min.js' %}"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
     <!--<script type="text/javascript" src="{% static 'home/js/jquery.mousewheel.min.js' %}"></script>-->
     <script type="text/javascript" src="{% static 'home/js/jquery.carousel-1.1.js' %}"></script>
-    <script type="text/javascript" src="{% static 'home/js/backtotop.js' %}"></script>
     <script type="text/javascript" src="{% static 'home/js/jquery.nav.js' %}"></script>
     <script type="text/javascript" src="{% static 'home/js/wow.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'home/js/lightbox.js' %}"></script>

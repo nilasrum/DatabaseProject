@@ -8,7 +8,8 @@ body {
 }
 
 .topbottom {
-    margin: 6% auto;
+    margin:auto;
+    margin-bottom: 50px;
     /*glass*/
     border: 1px solid rgba(0, 0, 0, 0.5);
     border-radius: 5px 5px 5px 5px;
@@ -78,7 +79,13 @@ a:hover {
     padding: 20px 30px;
     min-height: 439px!important;
 }
-
+.backhome{
+  color:white;
+  display: block;
+  margin: auto;
+  text-align: center;
+  padding: 30px;
+}
 .person {
     font-size: 30px;
     border-bottom: 1px solid #e1e1e1;
@@ -100,9 +107,10 @@ a:hover {
 
 .desciption {
     font-family: 'Poiret One';
-    font-weight: bold;
+    font-weight: normal;
     align-self: center;
-    color: gainsboro;
+    color: white;
+    padding: 20px;
 }
 
 .desciption.home {

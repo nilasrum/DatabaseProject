@@ -50,7 +50,7 @@ class CreateAdminPost(CreateView):
     now = str(datetime.datetime.now())
     now = now[:19]
     model.date = now
-    fields = ['post']
+    fields = ['title','post']
 
 
 @cbv_decorator(user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err')))

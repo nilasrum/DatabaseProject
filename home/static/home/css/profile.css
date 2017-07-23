@@ -141,3 +141,15 @@ ul li:hover {
 .fa-pad {
     padding: 10px;
 }
+.modal-content {
+    color: gainsboro;
+    border-radius: 0;
+    background-color: #333439;
+    width: 800px;
+    padding: 30px;
+    text-align: center;
+    content: justify;
+}
+.modal-content h4{
+  margin-bottom: 30px;
+}

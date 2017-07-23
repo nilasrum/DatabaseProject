@@ -1,7 +1,13 @@
 {% extends 'home/member_profile_base.html' %} {% block left-nav %}
+{% if user.can_edit %}
 <div class="avatar">
     <a href="{% url 'home:member-profile-update-st' user.id %}"><img class="avatar-img" src="{{user.propic.url}}" /></a>
 </div>
+{% else %}
+<div class="avatar">
+    <a href="#"><img class="avatar-img" src="{{user.propic.url}}" /></a>
+</div>
+{% endif %}
 <div class="username">
     <h4>{{user.username}}</h4>
 </div>

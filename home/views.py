@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.views import generic
 from django.views.generic import View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import UserForm, LoginForm, StudentProfileForm, RegistrationForm, ProfileFormSt
+from .forms import UserForm, LoginForm, StudentProfileForm, RegistrationForm, ProfileFormSt, ContactForm
 from .models import Gallery, About, Recent, Upcoming, HallOfFame, StudentProfile, ActivationStatus, OnlineContestProfile, SustContestProfile, Bio
 from notification.models import Notification
 from django.contrib.auth.models import User
@@ -18,7 +18,7 @@ from django.utils.decorators import method_decorator
 from django.forms import inlineformset_factory
 from django import forms
 from django.views.generic import FormView
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.contrib import messages
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -108,6 +108,12 @@ def login_form_view(request):
             if user is not None and user.is_active:
                 login(request, user)
                 return redirect('home:index')
+
+        user = User.objects.get(username=username)
+        if user.is_superuser:
+            messages.error(request, 'password mismatch',
+                           extra_tags='msg-err')
+            return render(request, 'home/loginform.html', {'form': form})
 
         if ActivationStatus.objects.get(user=user).status == False and Notification.objects.get(user=user).approved == True:
             messages.error(request, 'User has been blocked by admin',
@@ -352,8 +358,10 @@ def member_profile_view_oc(request, id):
     x.codeforces = OnlineContestProfile.objects.get(user=user).codeforces
     x.topcode = OnlineContestProfile.objects.get(user=user).topcode
     x.uva = OnlineContestProfile.objects.get(user=user).uva
-    if len(x.uva)>0:
+    if len(x.uva) > 0:
         x.uvadetails = getUvaInfo(x.uva)
+    if len(x.codeforces) > 0:
+        x.cfdetails = getCfInfo(x.codeforces)
     x.hackerrank = OnlineContestProfile.objects.get(user=user).hackerrank
     x.can_edit = False
     if request.user.id == user.id:
@@ -463,8 +471,7 @@ class DeleteUpcoming(DeleteView):
 @cbv_decorator(user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err')))
 class CreateHalloffame(CreateView):
     model = HallOfFame
-    fields = ['teamname', 'member1', 'member2', 'member3', 'coach',
-              'participated', 'top10', 'top5', 'champion', 'description', 'image_url']
+    fields = ['teamname', 'member1', 'member2', 'member3', 'coach', 'description', 'image_url']
 
     def get_success_url(self):
         return reverse('home:detail-halloffame', kwargs={'id': self.object.id})
@@ -478,8 +485,7 @@ def halloffame_detail(request, id):
 @cbv_decorator(user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err')))
 class UpdateHalloffame(UpdateView):
     model = HallOfFame
-    fields = ['teamname', 'member1', 'member2', 'member3', 'coach',
-              'participated', 'top10', 'top5', 'champion', 'description', 'image_url']
+    fields = ['teamname', 'member1', 'member2', 'member3', 'coach', 'description', 'image_url']
 
     def get_success_url(self):
         return reverse('home:detail-halloffame', kwargs={'id': self.object.id})
@@ -493,12 +499,57 @@ class DeleteHalloffame(DeleteView):
 # Gallery
 # ---------------------
 
+
 @cbv_decorator(user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err')))
 class GalleryPhotos(CreateView):
     model = Gallery
-    fields = ['title','image_url']
+    fields = ['title', 'image_url']
+
 
 @cbv_decorator(user_passes_test(lambda u: u.is_staff, login_url=reverse_lazy('home:admin-err')))
 class DeletePhotos(DeleteView):
     model = Gallery
     success_url = reverse_lazy('home:index')
+
+# send mail
+#----------------
+
+
+def send_mail_view(request):
+    form_class = ContactForm
+
+    # new logic!
+    if request.method == 'POST':
+        form = form_class(request.POST)
+
+        if form.is_valid():
+            contact_name = request.POST.get(
+                'contact_name', '')
+            contact_sub = request.POST.get(
+                'contact_sub', '')
+            contact_email = request.POST.get(
+                'contact_email', '')
+            content = request.POST.get('content', '')
+
+            # Email the profile with the
+            # contact information
+            # template =
+            #    get_template('contact_template.txt')
+            # context = Context({
+            #    'contact_name': contact_name,
+            #    'contact_email': contact_email,
+            #    'form_content': form_content,
+            #})
+            #content = template.render(context)
+
+            email = EmailMessage(
+                contact_sub,
+                content,
+                contact_name,
+                ['email@gmail.com'],
+                headers={'Reply-To': contact_email}
+            )
+            email.send()
+            return HttpResponse("< h1 > mail sent < /h1 >")
+
+    return redirect('home:index')
